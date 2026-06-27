@@ -84,6 +84,7 @@
   <section id="v-review" hidden></section>
   <section id="v-prepare" hidden></section>
   <section id="v-revise" hidden></section>
+  <section id="v-sources" hidden></section>
   <section id="v-loading"><p class="lead">Loading your study content…</p></section>
 </main>
 
@@ -110,7 +111,7 @@ $('#readBtn').onclick=()=>{ if(speaking){window.speechSynthesis.cancel();setRead
 function announce(m){let r=$('#live');if(!r){r=document.createElement('div');r.id='live';r.className='visually-hidden';r.setAttribute('aria-live','assertive');document.body.appendChild(r);}r.textContent='';setTimeout(()=>r.textContent=m,30);}
 
 /* ---- views ---- */
-function show(v){['home','study','write','review','prepare','revise','loading'].forEach(x=>$('#v-'+x).hidden=(x!==v));window.scrollTo({top:0});if(speaking){window.speechSynthesis.cancel();setRead(false);}}
+function show(v){['home','study','write','review','prepare','revise','sources','loading'].forEach(x=>$('#v-'+x).hidden=(x!==v));window.scrollTo({top:0});if(speaking){window.speechSynthesis.cancel();setRead(false);}}
 function packFor(key){return (CONTENT.packs||{})[key+'|'+TRAD]||null;}
 function topic(key){return CONTENT.topics.find(t=>t.key===key);}
 
@@ -134,6 +135,7 @@ function renderHome(){const v=$('#v-home');
     {id:'write',ico:'✍️',t:'Practise an essay',d:'A question in the real style — plan it, write it timed, with the facts at your side.'},
     {id:'mock',ico:'⏱️',t:'Timed mock',d:'Two essays in two hours (or your own setup). Exam conditions.'},
     {id:'prepare',ico:'🧭',t:'Prepare & stay calm',d:'The 5 things that lose marks, and how to walk in confident.'},
+    {id:'sources',ico:'📚',t:'Sources & accuracy',d:'The official documents this is built from — open them to check anything, plus an honest note on how accurate it is.'},
   ];
   v.innerHTML=`<h1 id="hh">Your Studies of Religion coach</h1>
     <p class="lead">Studying <strong>${esc(TRAD)}</strong> as your second tradition. Switch any time (top bar). Pick a path:</p>
@@ -143,7 +145,7 @@ function renderHome(){const v=$('#v-home');
         <div class="row" style="justify-content:space-between"><strong>Section ${t.section} · ${esc(t.label)}</strong><span class="small muted">${r}% ready</span></div>
         <div class="bar-track" style="margin-top:.5rem"><div class="bar-fill" style="width:${r}%"></div></div>
         <div class="row" style="margin-top:.5rem">${t.criteria.map(c=>`<span class="chip">${c}</span>`).join('')}</div></button>`;}).join('')}</div>`;
-  $$('#v-home [data-go]').forEach(b=>b.onclick=()=>{const g=b.dataset.go; if(g==='mock')startMock(); else if(g==='study')openStudyPicker(); else if(g==='write')openWritePicker(); else if(g==='prepare')renderPrepare(); else if(g==='revise')openRevisePicker();});
+  $$('#v-home [data-go]').forEach(b=>b.onclick=()=>{const g=b.dataset.go; if(g==='mock')startMock(); else if(g==='study')openStudyPicker(); else if(g==='write')openWritePicker(); else if(g==='prepare')renderPrepare(); else if(g==='revise')openRevisePicker(); else if(g==='sources')renderSources();});
   $$('#v-home [data-study]').forEach(b=>b.onclick=()=>openStudy(b.dataset.study));
   show('home');
 }
@@ -265,17 +267,59 @@ function openReview(key){const t=topic(key),p=packFor(key);const v=$('#v-review'
 function startMock(){const ids=['A-variant','B-suffering','C-women'].slice(0,2);mock={ids,mins:60,index:0};openWrite(ids[0],mock);}
 
 /* ---- PREPARE (killers + exam-day) ---- */
-function mdToHtml(md){md=esc(md);const lines=md.split('\n');let html='',inList=false;
-  for(let ln of lines){ if(/^\s*[-*]\s+/.test(ln)){if(!inList){html+='<ul class="tight">';inList=true;}html+='<li>'+ln.replace(/^\s*[-*]\s+/,'')+'</li>';continue;} if(inList){html+='</ul>';inList=false;}
-    if(/^###\s/.test(ln))html+='<h3>'+ln.replace(/^###\s/,'')+'</h3>'; else if(/^##\s/.test(ln))html+='<h2>'+ln.replace(/^##\s/,'')+'</h2>'; else if(/^#\s/.test(ln))html+='<h2>'+ln.replace(/^#\s/,'')+'</h2>'; else if(ln.trim()==='')html+=''; else html+='<p>'+ln+'</p>'; }
-  if(inList)html+='</ul>';
-  return html.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');}
+const KILLERS=[
+ {n:1,name:'The Retell',caps:'caps you at C',wrong:'You tell the story (e.g. Constantine called the Council of Nicaea, the bishops met, Arius lost) but never answer the verb. The question said “evaluate” — you only “described”.',fix:'End every paragraph on a clause that answers the verb: “…which mattered because…”, not “…and then…”.'},
+ {n:2,name:'The Lump',caps:'caps you at C',wrong:'You write “Christians believe…” or “Jews believe…” as if each is one group. (The bread/wine literally becoming Christ is Catholic; most Protestants hold a memorial view. Driving on Shabbat: many Orthodox don’t — many Reform do.)',fix:'Never “Christians/Jews believe X”. Name the strand: “Catholic teaching holds X, whereas most Reformed Protestants hold Y.”'},
+ {n:3,name:'The Voiceless Essay',caps:'caps you at B',wrong:'It’s all your own summary — no scripture, no scholar, no named position. There’s nothing to weigh against anything.',fix:'Bank 2–3 short scripture quotes + 2–3 named scholars per topic. Use at least one of each in every essay.'},
+ {n:4,name:'The Fence-Sitter',caps:'caps you at B',wrong:'You analyse two views well… then never judge. No thesis, no “most significant because”, just “there are many views”.',fix:'State a thesis in the intro and return to it — weigh the views, don’t just list them.'},
+ {n:5,name:'The Howler',caps:'can sink the whole essay',wrong:'A confident factual error (e.g. “Anglicans are Protestant”, “Jews attend chapel”, a wrong date). One howler makes the marker distrust everything else.',fix:'Lock the non-negotiables: synagogue/rabbi/Torah, the Temple fell 70 CE, Nicaea 325 CE, and never flatly call Anglicanism “Protestant” (it’s a via media).'}
+];
+const EXAMDAY=[
+ {icon:'🌙',title:'The night before',points:['Test yourself from memory (don’t re-read): write the main Christian denominations + one belief each, and the 3 Jewish movements + how each treats the Torah. Retrieval practice both sticks AND calms nerves.','Pack your bag (pens, water, watch) so the morning has zero panic.']},
+ {icon:'☀️',title:'Exam morning',points:['Eat something with protein — brain fog plus low blood sugar is a bad mix.','Do a 5-minute “worry dump”: write freely about exactly what you’re scared of. It clears space in your working memory.']},
+ {icon:'🧘',title:'First 5 minutes — settle',points:['Box breathing: in 4, hold 4, out 4, hold 4 — three rounds. Slow exhales calm your body.','Brain-dump the facts you’re scared to forget (dates like 1054, 1517, 70 CE; councils like Nicaea 325; scholar names). On paper, your brain can stop guarding them.']},
+ {icon:'📖',title:'Reading time (15 min) — plan, don’t panic',points:['Read the whole paper once (~3 min). Don’t grab the first friendly question.','Pick the questions where you have SPECIFIC evidence — not the ones that just “feel” easy.','Decode the verb: explain/describe = C · analyse = B · evaluate / “to what extent” = A. Answer the wrong verb and you cap your own grade.','Plan both essays in your head: a one-sentence thesis + 3 points each, anchored to a name or text.']},
+ {icon:'⏱️',title:'Time-boxing each essay',points:['A 3-hour, 2-essay shape: 5 min settle · 15 min read+plan · ~70 min each essay (5 plan / 60 write / 5 check) · 10 min sweep · 10 min buffer.','Iron rule: when an essay’s time is up, MOVE ON. Two essays three-quarters done beats one perfect + one barely started.','Write your two STOP times at the top of the paper, so you check against a target.','Read your real paper’s front cover first and adjust these numbers — the cover tells you the rules.']},
+ {icon:'💪',title:'Walk in confident',points:['Reframe the nerves: a racing heart is your body powering up, not a warning sign.','Have a one-line anchor: “I’ve written essays on Christianity and Judaism before. I can do this one.”','Trust the routine, not the mood: breathe → brain-dump → read the paper. The steps carry you when the feeling doesn’t show up.']},
+ {icon:'🆘',title:'If your mind blanks',points:['A blank is panic sitting on top of your memory — not your knowledge gone. Lower the panic and it comes back.','Stop. Three slow out-breaths, pen down. Ten seconds of this beats two minutes of frozen staring.','Write the question in your own words — the act of rephrasing restarts your thinking.','List any 3 facts you CAN recall in the margin — one memory pulls the next.','Do the easier essay first to build momentum, then return to the hard one.','Stuck on one fact? Write “[council, mid-5th C]” and move on — don’t grind. Worst case, bullet-point your argument, then turn each bullet into a sentence.']},
+ {icon:'🎯',title:'Accuracy guardrails — lock before you go in',points:['Anglicans are their OWN thing — a via media (middle way), not simply “Protestant”.','Never “all Orthodox Jews do X” — Judaism varies even within Orthodoxy. Say “many” or “traditionally”, and name the movement.','Use the right words: synagogue (or shul), rabbi, Torah — never “chapel/church/priest” for Jewish worship.']}
+];
+const SOURCES=[
+ {label:'Course page — full course document + standards',url:'https://www.tasc.tas.gov.au/students/courses/humanities-and-social-sciences/rel315124-2/'},
+ {label:'External Assessment Specifications',url:'https://assets.tasc.tas.gov.au/uploads/2026/06/REL315124-Studies-of-Religion-External-Assessment-Specifications.pdf'},
+ {label:'Exemplar exam',url:'https://assets.tasc.tas.gov.au/uploads/2026/06/REL315124-Studies-of-Religion-Exemplar-Exam.pdf'},
+ {label:'2024 exam paper',url:'https://assets.tasc.tas.gov.au/uploads/2026/06/REL315124-Studies-of-Religion-TASC-Exam-Paper-2024.pdf'},
+ {label:'2025 exam paper',url:'https://assets.tasc.tas.gov.au/uploads/2026/06/REL315124-Studies-of-Religion-TASC-Exam-Paper-2025.pdf'},
+ {label:'2024 assessment report (examiners’ feedback)',url:'https://assets.tasc.tas.gov.au/uploads/2026/06/REL315124-Studies-of-Religion-Assessment-Report-2024.pdf'},
+ {label:'2025 assessment report (examiners’ feedback)',url:'https://assets.tasc.tas.gov.au/uploads/2026/06/REL315124-Studies-of-Religion-Assessment-Report-2025.pdf'}
+];
 function renderPrepare(){const v=$('#v-prepare');
-  v.innerHTML=`<button class="btn-ghost" id="pBack">← Home</button><h1>Prepare &amp; walk in confident</h1>
-    <div class="calm"><strong>Before you read anything below — a breath.</strong> You've done the building. This page is just the map. You don't need to be perfect; you need to answer the question and keep climbing the ladder.</div>
-    <div class="card pitfall md"><h2 style="margin-top:.2rem">⚠️ The 5 killers (what loses marks)</h2>${mdToHtml(CONTENT.killers||'')}</div>
-    <div class="card md"><h2 style="margin-top:.2rem">🧭 Exam-day playbook</h2>${mdToHtml(CONTENT.examDay||'')}</div>`;
+  v.innerHTML=`<button class="btn-ghost" id="pBack">← Home</button>
+    <h1>🧭 Prepare &amp; walk in calm</h1>
+    <div class="calm">Take a breath. You’ve done the building — this is just the map. <strong>Tap one card at a time.</strong> You don’t need to read it all at once.</div>
+    <h2 style="margin-top:1.2rem">⚠️ The 5 things that lose marks</h2>
+    <p class="small muted">A quick list — tap any one for the detail &amp; the fix.</p>
+    ${KILLERS.map(k=>`<details><summary>Killer ${k.n} · ${esc(k.name)} <span class="tiny muted">— ${esc(k.caps)}</span></summary>
+        <p class="small" style="margin:.5rem 0"><strong>What goes wrong:</strong> ${esc(k.wrong)}</p>
+        <div class="small agrade" style="padding:.55rem .8rem;border-radius:9px;border:1px solid"><strong>✓ The fix:</strong> ${esc(k.fix)}</div></details>`).join('')}
+    <div class="card" style="background:var(--surface-2)"><span class="small"><strong>In one line:</strong> Killers 1–2 keep you at C (retelling / lumping). 3–4 keep you at B (no voices / no verdict). 5 can sink an A. Climb the verb ladder, keep the facts clean.</span></div>
+    <h2 style="margin-top:1.4rem">🗓️ Exam-day playbook</h2>
+    <p class="small muted">Short steps. Open the one you need.</p>
+    ${EXAMDAY.map(s=>`<details><summary>${s.icon} ${esc(s.title)}</summary><ul class="tight" style="margin:.4rem 0">${s.points.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></details>`).join('')}`;
   $('#pBack').onclick=renderHome;show('prepare');
+}
+function renderSources(){const v=$('#v-sources');
+  v.innerHTML=`<button class="btn-ghost" id="sBack">← Home</button>
+    <h1>📚 Sources &amp; how accurate this is</h1>
+    <div class="card pitfall"><h3 style="margin-top:.2rem">How much can you trust these notes?</h3>
+      <p class="small">Be honest with yourself about this. Every fact here was <strong>written by AI, then independently fact-checked by a second AI pass</strong> — which caught and fixed real errors (an invented mnemonic, a wrong denomination, wrong dates) before they reached you.</p>
+      <p class="small">That’s a strong safety net — but it is <strong>not</strong> the same as your teacher or the official documents. Religious accuracy is something markers treat as a threshold, so: use these as a fast study scaffold, and <strong>check anything important against the official sources below and your teacher.</strong></p></div>
+    <div class="card"><h3 style="margin-top:.2rem">Official sources — open to verify (TASC)</h3>
+      <p class="small muted">These are the real, public documents this app is built from. Open any to check a fact.</p>
+      <ul class="tight">${SOURCES.map(s=>`<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)} ↗</a></li>`).join('')}</ul></div>
+    <div class="card"><h3 style="margin-top:.2rem">Textbooks (for deeper reading)</h3>
+      <p class="small">Your teacher’s set texts — e.g. <em>Living Religion</em> (6th ed., Morrissey et al.) and <em>Exploring Religion and Ethics</em> (Goldburg et al., Cambridge). These are copyrighted, so they’re <strong>not reproduced here</strong> — borrow them through your school or library. (Want to read your own copy alongside the app? I can add a private, on-device PDF reader — just ask.)</p></div>`;
+  $('#sBack').onclick=renderHome;show('sources');
 }
 
 /* ---- REVISE (labelled notes pockets) ---- */
