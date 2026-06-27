@@ -118,6 +118,16 @@
   .qresp:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
   .your-ans{background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);border-radius:9px;padding:.5rem .7rem;margin-bottom:.5rem}
   ul.sci{margin:.4rem 0 0;padding-left:1.15rem} ul.sci li{margin:.55rem 0;font-size:.92rem} ul.sci a{font-weight:700;text-decoration:underline}
+  .scard{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:1.4rem 1.2rem;min-height:40vh}
+  .stitle{font-size:1.5rem;line-height:1.25;margin:.2rem 0 .8rem;color:var(--ink)}
+  .sbody{font-size:1.12rem;line-height:1.7;color:var(--ink)}
+  .sdots{display:flex;gap:.35rem;margin:.4rem 0 .7rem;flex-wrap:wrap}
+  .sdot{width:.5rem;height:.5rem;border-radius:50%;background:var(--line);transition:width .15s}
+  .sdot.on{background:var(--accent);width:1.4rem;border-radius:99px}
+  .srow{display:flex;gap:.6rem;align-items:center;margin:.5rem 0;flex-wrap:wrap} .snav{justify-content:space-between;margin-top:1rem}
+  .schip-toggle{font:inherit;font-weight:700;color:var(--accent-ink);background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);border-radius:999px;padding:.35rem .8rem;cursor:pointer}
+  .schip-toggle:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+  button[disabled]{opacity:.4;cursor:not-allowed}
   @keyframes flipin{from{opacity:0;transform:perspective(600px) rotateX(-14deg) translateY(8px)}to{opacity:1;transform:none}}
   .toast{position:fixed;left:50%;bottom:16%;transform:translateX(-50%);background:var(--good);color:#fff;padding:.55rem 1.1rem;border-radius:999px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.22);z-index:60;animation:pop .28s ease}
   @keyframes pop{from{opacity:0;transform:translateX(-50%) scale(.7)}to{opacity:1;transform:translateX(-50%) scale(1)}}
@@ -210,6 +220,7 @@
   <section id="v-revise" hidden></section>
   <section id="v-sources" hidden></section>
   <section id="v-pdf" hidden></section>
+  <section id="v-story" hidden></section>
   <section id="v-loading"><p class="lead">Loading your study content…</p></section>
 </main>
 
@@ -284,7 +295,7 @@ function announce(m){let r=$('#live');if(!r){r=document.createElement('div');r.i
 function toast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>{t.remove();},1400);announce(msg);}
 
 /* ---- views ---- */
-function show(v){['home','study','write','review','prepare','revise','sources','pdf','loading'].forEach(x=>$('#v-'+x).hidden=(x!==v));window.scrollTo({top:0});if(speaking){window.speechSynthesis.cancel();setRead(false);}}
+function show(v){['home','study','write','review','prepare','revise','sources','pdf','story','loading'].forEach(x=>$('#v-'+x).hidden=(x!==v));window.scrollTo({top:0});if(speaking){window.speechSynthesis.cancel();setRead(false);}}
 function packFor(key){return (CONTENT.packs||{})[key+'|'+TRAD]||null;}
 function topic(key){return CONTENT.topics.find(t=>t.key===key);}
 
@@ -607,6 +618,7 @@ function openRevise(key){const t=topic(key),p=packFor(key),v=$('#v-revise');
   v.innerHTML=`<button class="btn-ghost" id="rvBack">← Home</button>
     <h1>${ic('book')} Revision notes · Section ${t.section}</h1>
     <p class="lead">${esc(t.label)} - for <strong>${esc(TRAD)}</strong>. Everything in one place, in clear sections. Press ${ic('sound')} Read to hear it all.</p>
+    <button class="btn-primary" id="rvStory" style="width:100%;margin:.2rem 0 1.1rem">${ic('book')} Story mode - one idea at a time, swipe through (easier to take in)</button>
     ${pk(ic('pin'),'The question',`<p class="prompt">${esc(t.prompt)}</p><div class="row" style="margin-top:.5rem">${t.criteria.map(c=>`<span class="chip">${c} - ${CRIT[c]}</span>`).join('')}</div>`)}
     ${pk(ic('target'),'Why this question - what it’s really testing',`<ul class="tight">${t.criteria.map(c=>`<li>${esc(CRIT_WHY[c]||'')}</li>`).join('')}</ul>`)}
     ${pk(ic('books'),'What you need to know',(p.whatToKnow||[]).map(w=>`<div class="fact"><strong>${esc(w.point)}</strong><div class="small" style="margin-top:.3rem">${esc(w.detail)}</div>${w.keyTerms&&w.keyTerms.length?`<div class="row" style="margin-top:.4rem">${w.keyTerms.map(x=>`<span class="chip gray">${esc(x)}</span>`).join('')}</div>`:''}</div>`).join(''))}
@@ -617,9 +629,48 @@ function openRevise(key){const t=topic(key),p=packFor(key),v=$('#v-revise');
     ${pk(ic('badge'),'The official standard - what A vs B vs C looks like',`${std}<p class="tiny muted" style="margin-top:.5rem">Official assessment standards © TASC, for study.</p>`)}
     ${pk(ic('star'),'An A-grade paragraph',`<div class="ans">${esc(p.exemplarParagraph||'')}</div>`)}
     <div class="row" style="margin:.4rem 0 2.5rem"><button class="btn-primary" id="rvWrite">Now practise this →</button> <button class="btn-ghost" id="rvStudy">Quiz me on it</button></div>`;
-  $('#rvBack').onclick=renderHome;$('#rvWrite').onclick=()=>openWrite(key,null);$('#rvStudy').onclick=()=>openStudy(key);
+  $('#rvBack').onclick=renderHome;$('#rvWrite').onclick=()=>openWrite(key,null);$('#rvStudy').onclick=()=>openStudy(key);$('#rvStory').onclick=()=>openStory(key);
   touch('Revised · '+(t&&t.label?t.label:''));show('revise');
 }
+
+/* ---- STORY MODE (micro, swipeable, make-it-yours) ---- */
+let storyState=null;
+function openStory(key){
+  const t=topic(key),p=packFor(key);
+  if(!p){renderHome();return;}
+  const cards=[];
+  (p.whatToKnow||[]).forEach((w,i)=>cards.push({id:'story|'+key+'|'+TRAD+'|k'+i,kind:'Know this',title:w.point,body:w.detail,terms:w.keyTerms||[]}));
+  (p.pointsOfView||[]).forEach((v,i)=>cards.push({id:'story|'+key+'|'+TRAD+'|v'+i,kind:'A point of view',title:v.label,body:(v.who?v.who+' - ':'')+v.summary,terms:v.source?[v.source]:[]}));
+  storyState={key:key,t:t,cards:cards,i:0};
+  touch('Story mode · '+(t&&t.label?t.label:''));
+  renderStory();show('story');
+}
+function renderStory(){
+  const v=$('#v-story'),s=storyState,n=s.cards.length,c=s.cards[s.i];
+  const dots=s.cards.map((x,i)=>'<span class="sdot'+(i===s.i?' on':'')+'"></span>').join('');
+  const chips=(c.terms&&c.terms.length)?'<div class="srow" style="margin-top:.8rem"><button class="schip-toggle" id="sReveal">Stuck? show key terms ('+c.terms.length+')</button><div id="sChips" hidden style="margin-top:.5rem">'+c.terms.map(tm=>'<span class="hook">'+esc(tm)+'</span>').join('')+'</div></div>':'';
+  v.innerHTML='<button class="btn-ghost" id="sBack">← Back to full notes</button>'+
+    '<div class="srow" style="justify-content:space-between;margin-top:.6rem"><span class="pill">'+esc(c.kind)+'</span><span class="tiny muted">'+(s.i+1)+' of '+n+'</span></div>'+
+    '<div class="sdots" aria-hidden="true">'+dots+'</div>'+
+    '<div class="scard" id="sCard"><h2 class="stitle">'+esc(c.title)+'</h2><p class="sbody">'+esc(c.body)+'</p>'+chips+
+      '<label for="sResp" class="tiny muted" style="display:block;margin:1rem 0 .3rem"><strong>Make it yours:</strong> write this idea in your own words (saves on this device, and feeds your essay).</label>'+
+      '<textarea id="sResp" class="qresp" placeholder="In my own words…" aria-label="Write this idea in your own words">'+esc(respGet(c.id))+'</textarea></div>'+
+    '<div class="srow snav"><button class="btn-ghost" id="sPrev"'+(s.i===0?' disabled':'')+'>← Prev</button>'+
+      '<span class="tiny muted">'+Math.round((s.i+1)/n*100)+'% through</span>'+
+      (s.i<n-1?'<button class="btn-primary" id="sNext">Next →</button>':'<button class="btn-primary" id="sDone">Build my answer →</button>')+'</div>';
+  $('#sBack').onclick=()=>openRevise(s.key);
+  const sr=$('#sResp');if(sr)sr.addEventListener('input',()=>respSet(c.id,sr.value));
+  const rv=$('#sReveal');if(rv)rv.onclick=()=>{$('#sChips').hidden=false;rv.hidden=true;};
+  if($('#sPrev'))$('#sPrev').onclick=()=>storyGo(-1);
+  if($('#sNext'))$('#sNext').onclick=()=>storyGo(1);
+  if($('#sDone'))$('#sDone').onclick=()=>openWrite(s.key,null);
+  const card=$('#sCard');let x0=null;
+  card.addEventListener('touchstart',e=>{x0=e.changedTouches[0].clientX;},{passive:true});
+  card.addEventListener('touchend',e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>50)storyGo(dx<0?1:-1);x0=null;});
+  window.scrollTo({top:0});
+}
+function storyGo(d){const s=storyState;const ni=s.i+d;if(ni<0||ni>=s.cards.length)return;s.i=ni;renderStory();}
+document.addEventListener('keydown',e=>{if(!storyState||$('#v-story').hidden)return;if(e.target&&e.target.tagName==='TEXTAREA')return;if(e.key==='ArrowRight')storyGo(1);else if(e.key==='ArrowLeft')storyGo(-1);});
 
 /* ---- boot ---- */
 fetch('content.json').then(r=>r.json()).then(d=>{CONTENT=d;renderTradSeg();renderHome();}).catch(e=>{$('#v-loading').innerHTML='<p class="lead">Couldn\'t load content.json. If you opened the file directly, use the live URL instead (it needs to be served).</p>';console.error(e);});
