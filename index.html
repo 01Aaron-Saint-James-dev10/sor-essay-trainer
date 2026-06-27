@@ -91,6 +91,16 @@
   ul.gate-list{margin:.3rem 0;padding-left:1.15rem} ul.gate-list li{margin:.4rem 0}
   .gate-steps{counter-reset:s;list-style:none;padding:0;margin:.4rem 0} .gate-steps li{counter-increment:s;position:relative;padding:.5rem 0 .5rem 2.3rem;border-bottom:1px solid var(--line)}
   .gate-steps li:last-child{border-bottom:0} .gate-steps li::before{content:counter(s);position:absolute;left:0;top:.45rem;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .ic-svg{vertical-align:-.14em} .gate-val .i{color:var(--accent)}
+  .prof{background:linear-gradient(180deg,var(--accent-soft),var(--surface));border:1px solid var(--line)}
+  .prof-head{display:flex;align-items:center;gap:.7rem} .prof-head>div{flex:1}
+  .prof-av{width:2.4rem;height:2.4rem;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex:0 0 auto}
+  .prof-hi{font-size:1.25rem;font-weight:800}
+  .prof-stats{display:flex;gap:.6rem;margin:.9rem 0 .3rem}
+  .stat{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.55rem;text-align:center}
+  .stat-n{display:block;font-size:1.3rem;font-weight:800;color:var(--accent-ink)} .stat-l{display:block;font-size:.72rem;color:var(--ink-soft)}
+  .btn-ghost.tiny{padding:.25rem .45rem} .btn-primary.tiny{padding:.3rem .7rem;font-size:.85rem}
+  .prof-setup{border:1px dashed var(--accent)}
   .hook{display:inline-block;background:var(--accent-soft);color:var(--accent-ink);font-weight:700;padding:.32rem .65rem;border-radius:999px;margin:.18rem;font-size:.95rem;border:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
   details.more{border:0;padding:0;margin:.7rem 0 0;background:transparent}
   details.more>summary{font-weight:600;color:var(--accent-ink);font-size:.9rem;padding:.3rem 0}
@@ -110,13 +120,13 @@
   <h1 class="gate-hero">Built for your exam. Only your exam.</h1>
   <p class="gate-sub">The study tool made just for <strong>REL315124 Studies of Religion</strong> — from the real TASC papers, examiners' reports and marking standards. Christianity &amp; Judaism, ready when you are.</p>
 
-  <div class="gate-val"><span class="i" aria-hidden="true">🎯</span><span><b>Made for this exam</b><span class="d">Built from the actual 2023–2025 papers and marking standards — not generic religion notes.</span></span></div>
-  <div class="gate-val"><span class="i" aria-hidden="true">✅</span><span><b>Checked, not guessed</b><span class="d">Every fact was AI-drafted then independently fact-checked — so what you study is what's true.</span></span></div>
-  <div class="gate-val"><span class="i" aria-hidden="true">🧠</span><span><b>Backed by science</b><span class="d">Uses retrieval practice + spaced repetition — the two methods proven to make things stick.</span></span></div>
-  <div class="gate-val"><span class="i" aria-hidden="true">🔒</span><span><b>Yours, on your device</b><span class="d">Works offline, keeps your work on your device. No accounts, no data shipped off.</span></span></div>
+  <div class="gate-val"><span class="i" aria-hidden="true"><svg class="ic-svg" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></span><span><b>Made for this exam</b><span class="d">Built from the actual 2023–2025 papers and marking standards — not generic religion notes.</span></span></div>
+  <div class="gate-val"><span class="i" aria-hidden="true"><svg class="ic-svg" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Checked, not guessed</b><span class="d">Every fact was AI-drafted then independently fact-checked — so what you study is what's true.</span></span></div>
+  <div class="gate-val"><span class="i" aria-hidden="true"><svg class="ic-svg" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 1 4 10c-1 .8-1 1.7-1 2.5H9c0-.8 0-1.7-1-2.5a6 6 0 0 1 4-10Z"/></svg></span><span><b>Backed by science</b><span class="d">Uses retrieval practice + spaced repetition — the two methods proven to make things stick.</span></span></div>
+  <div class="gate-val"><span class="i" aria-hidden="true"><svg class="ic-svg" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><span><b>Yours, on your device</b><span class="d">Works offline, keeps your work on your device. No accounts, no data shipped off.</span></span></div>
 
   <div class="gate-box">
-    <label for="codeIn" style="font-weight:700;display:block;margin-bottom:.5rem">🔑 Got your code? Enter it to unlock the tool</label>
+    <label for="codeIn" style="font-weight:700;display:block;margin-bottom:.5rem"><svg class="ic-svg" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="15" r="3.5"/><path d="M9.5 12.5 19 3l2 2-2 2 2 2-3 3-2-2"/></svg> Got your code? Enter it to unlock the tool</label>
     <input id="codeIn" placeholder="REL-XXXXX" autocomplete="off" autocapitalize="characters" aria-label="Access code" />
     <div id="codeErr" aria-live="polite"></div>
     <button id="unlockBtn" class="btn-primary" style="width:100%;font-size:1.05rem;margin-top:.5rem">Unlock my study tool →</button>
@@ -188,8 +198,8 @@
   <span class="brand"><span class="dot" aria-hidden="true"></span>SoR Study &amp; Trainer</span>
   <span class="seg" role="group" aria-label="Your second tradition focus" id="tradSeg"></span>
   <span class="seg" role="group" aria-label="Text size"><button id="tDown" aria-label="Smaller text">A−</button><button id="tUp" aria-label="Larger text">A+</button></span>
-  <button id="readBtn" class="btn-ghost" aria-pressed="false">🔊 Read</button>
-  <button id="homeBtn" class="btn-ghost">⌂ Home</button>
+  <button id="readBtn" class="btn-ghost" aria-pressed="false"><svg class="ic-svg" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg> Read</button>
+  <button id="homeBtn" class="btn-ghost"><svg class="ic-svg" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg> Home</button>
 </div></header>
 
 <main id="main">
@@ -222,11 +232,35 @@ async function tryUnlock(){const el=document.getElementById('codeIn');if(!el)ret
 
 /* ---- text size + read aloud ---- */
 const FS='sor_fs'; const setFs=v=>{document.documentElement.style.setProperty('--fs',v+'px');localStorage.setItem(FS,v)};
+/* ---- icon set (clean line icons, replace emoji) ---- */
+function ic(n){var P={target:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/>',check:'<path d="M20 6 9 17l-5-5"/>',brain:'<path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 1 4 10c-1 .8-1 1.7-1 2.5H9c0-.8 0-1.7-1-2.5a6 6 0 0 1 4-10Z"/>',lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',key:'<circle cx="7" cy="15" r="3.5"/><path d="M9.5 12.5 19 3l2 2-2 2 2 2-3 3-2-2"/>',sound:'<path d="M4 9v6h4l5 4V5L8 9Z"/><path d="M16 9a4 4 0 0 1 0 6"/>',stop:'<rect x="6" y="6" width="12" height="12" rx="2"/>',home:'<path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/>',book:'<path d="M5 4h11a1 1 0 0 1 1 1v15H6a1 1 0 0 1-1-1Z"/><path d="M17 4v16"/>',books:'<rect x="4" y="4" width="4" height="16"/><rect x="10" y="4" width="4" height="16"/><path d="M16 6l3 .8-3 13.2-3-.8"/>',pen:'<path d="M14 4l6 6L9 21H3v-6Z"/><path d="M13 5l6 6"/>',clock:'<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>',compass:'<circle cx="12" cy="12" r="9"/><path d="M16 8l-3 5-5 3 3-5Z"/>',clip:'<path d="M20 11l-8 8a5 5 0 0 1-7-7l9-9a3 3 0 0 1 4 4l-9 9a1 1 0 0 1-2-2l8-8"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',pin:'<path d="M9 3h6l-1 7 3 3H7l3-3-1-7Z"/><path d="M12 13v8"/>',users:'<circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5a3 3 0 0 1 0 6"/><path d="M18 14a6 6 0 0 1 3 6"/>',star:'<path d="M12 3l2.6 6.3 6.4.5-4.9 4.1 1.6 6.6L12 17l-5.3 4 1.6-6.6L3.4 9.8l6.4-.5Z"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',badge:'<path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6Z"/><path d="M9 12l2 2 4-4"/>',list:'<path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/>'};return '<svg class="ic-svg" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(P[n]||'')+'</svg>';}
+/* ---- profile + progress (all client-side, on-device) ---- */
+function pname(){return localStorage.getItem('sor_name')||'';}
+function setName(n){localStorage.setItem('sor_name',n);}
+function touch(label){try{localStorage.setItem('sor_last',JSON.stringify({label:label,ts:Date.now()}))}catch(e){}}
+function lastAct(){try{return JSON.parse(localStorage.getItem('sor_last')||'null')}catch(e){return null}}
+function marks(){try{return JSON.parse(localStorage.getItem('sor_marks')||'[]')}catch(e){return[]}}
+function saveMark(key,band){const m=marks();const day=new Date().toDateString();const i=m.findIndex(x=>x.key===key&&x.trad===TRAD&&new Date(x.ts).toDateString()===day);const rec={key:key,trad:TRAD,band:band,ts:Date.now()};if(i>=0)m[i]=rec;else m.push(rec);localStorage.setItem('sor_marks',JSON.stringify(m.slice(-30)));}
+function ago(ts){if(!ts)return'';var s=Math.floor((Date.now()-ts)/1000);if(s<60)return'just now';var m=Math.floor(s/60);if(m<60)return m+'m ago';var h=Math.floor(m/60);if(h<24)return h+'h ago';return Math.floor(h/24)+'d ago';}
+function overallReady(){var ts=(CONTENT&&CONTENT.topics)||[];if(!ts.length)return 0;return Math.round(ts.reduce((a,t)=>a+readiness(t.key),0)/ts.length);}
+function cardsBanked(){var ts=(CONTENT&&CONTENT.topics)||[];var done=0,tot=0,m=mastery();ts.forEach(t=>{var c=cardsFor(t.key);tot+=c.length;done+=c.filter(x=>(m[x.id]||0)>=3).length;});return{done:done,tot:tot};}
+function profilePanel(){
+  var nm=pname();
+  if(!nm){return '<div class="card prof-setup"><div class="row" style="gap:.6rem;align-items:center">'+ic('user')+'<strong>Welcome — what should we call you?</strong></div><div class="row" style="margin-top:.6rem;gap:.5rem"><input id="nameIn" placeholder="Your first name" autocomplete="off" aria-label="Your name" style="flex:1;font:inherit;padding:.55rem;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink)"/><button class="btn-primary" id="nameGo">Start →</button></div><p class="tiny muted" style="margin:.5rem 0 0">Stays on your device. No account, no email.</p></div>';}
+  var r=overallReady(),cb=cardsBanked(),la=lastAct(),mk=marks().slice(-3).reverse();
+  var lowest=((CONTENT&&CONTENT.topics)||[]).slice().sort((a,b)=>readiness(a.key)-readiness(b.key))[0];
+  return '<div class="card prof"><div class="prof-head"><span class="prof-av">'+ic('user')+'</span><div><div class="prof-hi">Hi, '+esc(nm)+'</div><div class="small muted">'+(la?'Last: '+esc(la.label)+' · '+ago(la.ts):'Let’s get started below.')+'</div></div><button class="btn-ghost tiny" id="profEdit" aria-label="Change your name">'+ic('pen')+'</button></div>'+
+    '<div class="prof-stats"><div class="stat"><span class="stat-n">'+r+'%</span><span class="stat-l">overall ready</span></div><div class="stat"><span class="stat-n">'+cb.done+'/'+cb.tot+'</span><span class="stat-l">facts banked</span></div><div class="stat"><span class="stat-n">'+(mk.length?esc(mk[0].band):'—')+'</span><span class="stat-l">last self-mark</span></div></div>'+
+    '<div class="bar-track" style="margin:.2rem 0 .6rem"><div class="bar-fill" style="width:'+r+'%"></div></div>'+
+    (lowest?'<div class="row" style="justify-content:space-between;align-items:center;gap:.5rem"><span class="small">'+ic('compass')+' Up next: build <strong>Section '+lowest.section+' · '+esc(lowest.label)+'</strong> ('+readiness(lowest.key)+'% ready)</span><button class="btn-primary tiny" data-study="'+lowest.key+'">Go →</button></div>':'')+
+    (mk.length?'<details style="margin-top:.6rem"><summary class="small">Your recent self-marks ('+mk.length+')</summary><ul class="tight small" style="margin:.4rem 0">'+mk.map(function(x){var tp=topic(x.key);return '<li><strong>'+esc(x.band)+'</strong> — '+(tp?esc(tp.label):esc(x.key))+' · '+esc(x.trad)+' · '+ago(x.ts)+'</li>';}).join('')+'</ul></details>':'')+
+    '</div>';
+}
 setFs(Math.min(22,Math.max(15,+(localStorage.getItem(FS)||17))));
 $('#tUp').onclick=()=>setFs(Math.min(22,(+localStorage.getItem(FS)||17)+1));
 $('#tDown').onclick=()=>setFs(Math.max(15,(+localStorage.getItem(FS)||17)-1));
 let speaking=false,readState=null,readKeepalive=null;
-function setRead(on){speaking=on;const b=$('#readBtn');if(b){b.setAttribute('aria-pressed',on?'true':'false');b.textContent=on?'⏹ Stop':'🔊 Read';}}
+function setRead(on){speaking=on;const b=$('#readBtn');if(b){b.setAttribute('aria-pressed',on?'true':'false');b.innerHTML=on?ic('stop')+' Stop':ic('sound')+' Read';}}
 function stopRead(){try{window.speechSynthesis.cancel();}catch(e){}if(readKeepalive){clearInterval(readKeepalive);readKeepalive=null;}if(readState&&readState.panel)readState.panel.remove();readState=null;setRead(false);}
 function highlightWord(wi){const t=$('#rpText');if(!t)return;const p=t.querySelector('.rp-on');if(p)p.classList.remove('rp-on');const s=t.querySelector('[data-wi="'+wi+'"]');if(s){s.classList.add('rp-on');s.scrollIntoView({block:'nearest',behavior:'smooth'});}}
 function startRead(){
@@ -236,7 +270,7 @@ function startRead(){
   if(!text){announce('Nothing to read here.');return;}
   const words=text.split(' ');const offsets=[];let acc=0;words.forEach(w=>{offsets.push(acc);acc+=w.length+1;});
   const panel=document.createElement('div');panel.id='readPanel';panel.setAttribute('role','region');panel.setAttribute('aria-label','Reading aloud — each word highlights as it is read');
-  panel.innerHTML='<div class="rp-bar"><strong>🔊 Reading aloud…</strong><button id="rpStop" class="btn-ghost">⏹ Stop</button></div><div class="rp-text" id="rpText">'+words.map((w,i)=>'<span data-wi="'+i+'">'+esc(w)+'</span>').join(' ')+'</div>';
+  panel.innerHTML='<div class="rp-bar"><strong>'+ic('sound')+' Reading aloud…</strong><button id="rpStop" class="btn-ghost">'+ic('stop')+' Stop</button></div><div class="rp-text" id="rpText">'+words.map((w,i)=>'<span data-wi="'+i+'">'+esc(w)+'</span>').join(' ')+'</div>';
   document.body.appendChild(panel);$('#rpStop').onclick=stopRead;
   const u=new SpeechSynthesisUtterance(text);u.rate=.95;
   u.onboundary=function(e){if(e.charIndex==null)return;let wi=0;for(let i=0;i<offsets.length;i++){if(offsets[i]<=e.charIndex)wi=i;else break;}highlightWord(wi);};
@@ -270,14 +304,15 @@ function renderTradSeg(){const seg=$('#tradSeg');seg.innerHTML=CONTENT.tradition
   $$('#tradSeg button').forEach(b=>b.onclick=()=>{TRAD=b.dataset.tr;localStorage.setItem('sor_trad',TRAD);renderTradSeg();renderHome();});}
 function renderHome(){const v=$('#v-home');
   const modes=[
-    {id:'study',ico:'🧠',t:'Study & quiz',d:'Build the knowledge up one piece at a time, with spaced recall. Start here.'},
-    {id:'revise',ico:'📖',t:'Revise & notes',d:'Everything for each question in clear, labelled sections — what to know, why, how, the official standard, and what to watch for.'},
-    {id:'write',ico:'✍️',t:'Practise an essay',d:'A question in the real style — plan it, write it timed, with the facts at your side.'},
-    {id:'mock',ico:'⏱️',t:'Timed mock',d:'Two essays in two hours (or your own setup). Exam conditions.'},
-    {id:'prepare',ico:'🧭',t:'Prepare & stay calm',d:'The 5 things that lose marks, and how to walk in confident.'},
-    {id:'sources',ico:'📚',t:'Sources & accuracy',d:'The official documents this is built from — open them to check anything, plus an honest note on how accurate it is.'},
+    {id:'study',ico:ic('brain'),t:'Study & quiz',d:'Build the knowledge up one piece at a time, with spaced recall. Start here.'},
+    {id:'revise',ico:ic('book'),t:'Revise & notes',d:'Everything for each question in clear, labelled sections — what to know, why, how, the official standard, and what to watch for.'},
+    {id:'write',ico:ic('pen'),t:'Practise an essay',d:'A question in the real style — plan it, write it timed, with the facts at your side.'},
+    {id:'mock',ico:ic('clock'),t:'Timed mock',d:'Two essays in two hours (or your own setup). Exam conditions.'},
+    {id:'prepare',ico:ic('compass'),t:'Prepare & stay calm',d:'The 5 things that lose marks, and how to walk in confident.'},
+    {id:'sources',ico:ic('books'),t:'Sources & accuracy',d:'The official documents this is built from — open them to check anything, plus an honest note on how accurate it is.'},
   ];
   v.innerHTML=`<h1 id="hh">Your Studies of Religion coach</h1>
+    ${profilePanel()}
     <p class="lead">Studying <strong>${esc(TRAD)}</strong> as your second tradition. Switch any time (top bar). Pick a path:</p>
     <div class="grid g2">${modes.map(m=>`<button class="card mode" data-go="${m.id}"><span class="ico" aria-hidden="true">${m.ico}</span><span><span class="t">${m.t}</span><br><span class="d">${m.d}</span></span></button>`).join('')}</div>
     <h2>Your readiness</h2>
@@ -285,8 +320,10 @@ function renderHome(){const v=$('#v-home');
         <div class="row" style="justify-content:space-between"><strong>Section ${t.section} · ${esc(t.label)}</strong><span class="small muted">${r}% ready</span></div>
         <div class="bar-track" style="margin-top:.5rem"><div class="bar-fill" style="width:${r}%"></div></div>
         <div class="row" style="margin-top:.5rem">${t.criteria.map(c=>`<span class="chip">${c}</span>`).join('')}</div></button>`;}).join('')}</div>`;
-  $$('#v-home [data-go]').forEach(b=>b.onclick=()=>{const g=b.dataset.go; if(g==='mock')startMock(); else if(g==='study')openStudyPicker(); else if(g==='write')openWritePicker(); else if(g==='prepare')renderPrepare(); else if(g==='revise')openRevisePicker(); else if(g==='sources')renderSources();});
+  $$('#v-home [data-go]').forEach(b=>b.onclick=()=>{const g=b.dataset.go; if(g==='mock'){touch('Timed mock');startMock();} else if(g==='study')openStudyPicker(); else if(g==='write'){touch('Practised an essay');openWritePicker();} else if(g==='prepare')renderPrepare(); else if(g==='revise')openRevisePicker(); else if(g==='sources')renderSources();});
   $$('#v-home [data-study]').forEach(b=>b.onclick=()=>openStudy(b.dataset.study));
+  const _ng=$('#nameGo');if(_ng){_ng.onclick=()=>{const nv=$('#nameIn').value.trim();if(nv){setName(nv);touch('Joined');renderHome();}};$('#nameIn').addEventListener('keydown',e=>{if(e.key==='Enter')_ng.click();});}
+  const _pe=$('#profEdit');if(_pe)_pe.onclick=()=>{const nn=prompt('Your name:',pname());if(nn!=null){setName(nn.trim());renderHome();}};
   show('home');
 }
 function openStudyPicker(){pickTopic('Study which section?',openStudy);}
@@ -306,15 +343,15 @@ function openStudy(key){const t=topic(key),p=packFor(key);const v=$('#v-study');
     <div class="card"><div class="row" style="justify-content:space-between"><strong>Readiness</strong><span class="small muted" id="sPct">${readiness(key)}%</span></div>
       <div class="bar-track" style="margin-top:.5rem"><div class="bar-fill" id="sBar" style="width:${readiness(key)}%"></div></div></div>
     <div id="quizWrap"></div>
-    <div class="row" style="margin-top:.7rem"><button class="btn-ghost" id="toNotes">📖 See the full written notes for this question</button></div>`;
+    <div class="row" style="margin-top:.7rem"><button class="btn-ghost" id="toNotes">${ic('book')} See the full written notes for this question</button></div>`;
   $('#sBack').onclick=renderHome;$('#toNotes').onclick=()=>openRevise(key);
-  nextCard();show('study');
+  touch('Studied · '+(t&&t.label?t.label:''));nextCard();show('study');
 }
 function nextCard(){const w=$('#quizWrap');const m=mastery();
   session.queue=session.cards.slice().filter(c=>(m[c.id]||0)<3).sort((a,b)=>(m[a.id]||0)-(m[b.id]||0));
   if(!session.queue.length){w.innerHTML=`<div class="card calm" style="text-align:center"><h3>🎉 All banked for now.</h3><p class="muted small">This section is green. Come back tomorrow — spacing makes it stick.</p><button class="btn-primary" id="toWrite">Try writing this one →</button></div>`;$('#toWrite').onclick=()=>openWrite(session.key,null);return;}
   const c=session.queue[0];const banked=session.cards.filter(x=>(m[x.id]||0)>=3).length;
-  const hooks=(c.terms&&c.terms.length)?`<div style="margin:.1rem 0 .2rem"><div class="small" style="margin-bottom:.35rem"><strong>🔑 The hooks to remember</strong></div><div>${c.terms.map(t=>`<span class="hook">${esc(t)}</span>`).join('')}</div></div>`:'';
+  const hooks=(c.terms&&c.terms.length)?`<div style="margin:.1rem 0 .2rem"><div class="small" style="margin-bottom:.35rem"><strong>${ic('key')} The hooks to remember</strong></div><div>${c.terms.map(t=>`<span class="hook">${esc(t)}</span>`).join('')}</div></div>`:'';
   const cue=(c.terms&&c.terms.length)?`💭 Try to recall ${c.terms.length} key terms (in your head or out loud), then reveal.`:`💭 Answer in your head, then reveal.`;
   w.innerHTML=`<div class="card"><div class="row" style="justify-content:space-between"><span class="pill">${c.tag}</span><span class="tiny muted">${banked}/${session.cards.length} banked</span></div>
     <div class="qcard"><div id="qFront"><div>${esc(c.q)}</div><div class="tiny muted" style="margin-top:.7rem">${cue}</div></div><div id="qBack" hidden></div></div>
@@ -349,14 +386,14 @@ function openWrite(key,mk){const t=topic(key),p=packFor(key);curKey=key;mock=mk;
     <div class="row" style="margin:.2rem 0 .5rem">${t.criteria.map(c=>`<span class="chip" title="${CRIT[c]}">${c} — ${CRIT[c]}</span>`).join('')}</div>
     ${t.stimulus?stimulusSVG():''}
     <p class="prompt" tabindex="0">${esc(t.prompt)}</p>
-    <details open class="agrade"><summary>📝 Plan — the specific roadmap for THIS question</summary><ul class="tight">${(p.paragraphPlan||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
+    <details open class="agrade"><summary>${ic('list')} Plan — the specific roadmap for THIS question</summary><ul class="tight">${(p.paragraphPlan||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
       <p class="small"><strong>Model thesis to adapt:</strong> ${esc(p.workedThesis||'')}</p></details>
-    <details><summary>📎 Pull the facts you need (don't memorise — understand)</summary><div id="facts"></div></details>
+    <details><summary>${ic('clip')} Pull the facts you need (don't memorise — understand)</summary><div id="facts"></div></details>
     <details class="pitfall"><summary>⚠️ Traps that lose marks here</summary><ul class="tight">${(p.trapsForThisQuestion||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></details>
     <label for="essay" class="small muted" style="display:block;margin:.6rem 0 .3rem">Your essay (autosaves):</label>
     <textarea id="essay" placeholder="Intro: name the question + your thesis + a roadmap of your paragraphs…"></textarea>
     <div class="row" style="margin-top:.7rem"><button class="btn-primary" id="fin">✓ Finish &amp; self-mark</button>
-      <details style="margin:0"><summary>👁 See an A-grade paragraph</summary><div class="ans" style="margin-top:.4rem">${esc(p.exemplarParagraph||'')}</div></details>
+      <details style="margin:0"><summary>${ic('eye')} See an A-grade paragraph</summary><div class="ans" style="margin-top:.4rem">${esc(p.exemplarParagraph||'')}</div></details>
       <span class="small muted" id="save"></span></div>`;
   // facts
   $('#facts').innerHTML=`${(p.sources||[]).map(s=>`<div class="fact"><span class="pill">${esc(s.type)}</span> <strong>${esc(s.reference)}</strong> <span class="small muted">— ${esc(s.useFor)}</span></div>`).join('')}
@@ -393,7 +430,7 @@ function openReview(key){const t=topic(key),p=packFor(key);const v=$('#v-review'
       ${t.criteria.map(c=>{const L=(p&&p.ladderForThis)||{};const txt={C:L.C,B:L.B,A:L.A};return `<div style="margin:.6rem 0"><strong>${c} — ${CRIT[c]}</strong>
         <div class="ladder" role="radiogroup" aria-label="${CRIT[c]}">${['C','B','A'].map(l=>`<label class="${l}"><input type="radio" name="lad_${c}"><span class="lvl">${l}</span><span>${esc(txt[l]||({C:'explain/describe',B:'analyse',A:'evaluate significance'}[l]))}</span></label>`).join('')}</div></div>`;}).join('')}</div>
     <div class="card"><div class="row" style="justify-content:space-between"><div><span class="muted small">Your self-estimate</span><br><span style="font-size:1.2rem;font-weight:800" id="est">Mark above…</span></div><div class="small muted" id="wsum"></div></div></div>
-    <details class="agrade"><summary>👁 Compare with an A-grade paragraph</summary><div class="ans" style="margin-top:.4rem">${esc(p&&p.exemplarParagraph||'')}</div></details>
+    <details class="agrade"><summary>${ic('eye')} Compare with an A-grade paragraph</summary><div class="ans" style="margin-top:.4rem">${esc(p&&p.exemplarParagraph||'')}</div></details>
     ${mock&&mock.index<mock.ids.length-1?`<button class="btn-primary" id="nextM" style="margin-top:1rem">Next essay →</button>`:''}`;
   const calc=()=>{const chk=$$('#checks input:checked').length,tot=$$('#checks input').length;
     const lad=$$('#v-review input[type=radio]:checked');const totL=t.criteria.length;
@@ -401,7 +438,7 @@ function openReview(key){const t=topic(key),p=packFor(key);const v=$('#v-review'
     const map={C:1,B:2,A:3};const avg=[...$$('#v-review input[type=radio]:checked')].reduce((a,r)=>{const l=r.parentElement.querySelector('.lvl').textContent;return a+map[l];},0)/totL;
     const band=avg>=2.6?'A':avg>=2.2?'A/B':avg>=1.8?'B':avg>=1.4?'B/C':'C';
     const tip=chk<tot?`You ticked ${chk}/${tot} — the unticked ones are your fastest marks.`:'All boxes ticked — now push every criterion toward “evaluate”.';
-    $('#est').innerHTML=`${band} <span class="small muted">— ${tip}</span>`;};
+    $('#est').innerHTML=`${band} <span class="small muted">— ${tip}</span>`;saveMark(key,band);touch('Self-marked · '+(t&&t.label?t.label:''));};
   $$('#v-review input').forEach(i=>i.addEventListener('change',calc));
   const w=(localStorage.getItem('draft_'+key+'_'+TRAD)||'').trim().match(/\S+/g)||[];
   $('#wsum').innerHTML=`You wrote <b>${w.length}</b> words${w.length<450?' — examiners warn ~2 pages is too short.':' — good depth.'}`;
@@ -441,7 +478,7 @@ const SOURCES=[
 ];
 function renderPrepare(){const v=$('#v-prepare');
   v.innerHTML=`<button class="btn-ghost" id="pBack">← Home</button>
-    <h1>🧭 Prepare &amp; walk in calm</h1>
+    <h1>${ic('compass')} Prepare &amp; walk in calm</h1>
     <div class="calm">Take a breath. You’ve done the building — this is just the map. <strong>Tap one card at a time.</strong> You don’t need to read it all at once.</div>
     <h2 style="margin-top:1.2rem">⚠️ The 5 things that lose marks</h2>
     <p class="small muted">A quick list — tap any one for the detail &amp; the fix.</p>
@@ -452,11 +489,11 @@ function renderPrepare(){const v=$('#v-prepare');
     <h2 style="margin-top:1.4rem">🗓️ Exam-day playbook</h2>
     <p class="small muted">Short steps. Open the one you need.</p>
     ${EXAMDAY.map(s=>`<details><summary>${s.icon} ${esc(s.title)}</summary><ul class="tight" style="margin:.4rem 0">${s.points.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></details>`).join('')}`;
-  $('#pBack').onclick=renderHome;show('prepare');
+  $('#pBack').onclick=renderHome;touch('Prepared & calm');show('prepare');
 }
-function renderSources(){const v=$('#v-sources');
+function renderSources(){const v=$('#v-sources');touch('Checked sources');
   v.innerHTML=`<button class="btn-ghost" id="sBack">← Home</button>
-    <h1>📚 About, sources &amp; accuracy</h1>
+    <h1>${ic('books')} About, sources &amp; accuracy</h1>
     <div class="card calm"><h3 style="margin-top:.2rem">⚠️ Please read this first — the honest disclaimer</h3>
       <p class="small"><strong>This tool does not guarantee anything</strong> — not a grade, a mark, or a result. It is a <strong>study aid</strong>, designed to help you revise and practise more effectively. The learning, the work, and the outcome are yours.</p>
       <p class="small">It is built using <strong>evidence-based learning research</strong> and the <strong>full official course resources</strong>, and the facts have been double-checked by AI — but it is <strong>not</strong> a substitute for your teacher or the official documents. Always cross-check anything important.</p></div>
@@ -536,20 +573,20 @@ function openRevise(key){const t=topic(key),p=packFor(key),v=$('#v-revise');
       <div class="small"><strong style="color:var(--accent-ink)">B</strong> &nbsp;${esc(el.B)}</div>
       <div class="small"><strong class="muted">C</strong> &nbsp;${esc(el.C)}</div></div>`).join('')}</div>`;}).join('');
   v.innerHTML=`<button class="btn-ghost" id="rvBack">← Home</button>
-    <h1>📖 Revision notes · Section ${t.section}</h1>
-    <p class="lead">${esc(t.label)} — for <strong>${esc(TRAD)}</strong>. Everything in one place, in clear sections. Press 🔊 Read to hear it all.</p>
-    ${pk('📌','The question',`<p class="prompt">${esc(t.prompt)}</p><div class="row" style="margin-top:.5rem">${t.criteria.map(c=>`<span class="chip">${c} — ${CRIT[c]}</span>`).join('')}</div>`)}
-    ${pk('🎯','Why this question — what it’s really testing',`<ul class="tight">${t.criteria.map(c=>`<li>${esc(CRIT_WHY[c]||'')}</li>`).join('')}</ul>`)}
-    ${pk('📚','What you need to know',(p.whatToKnow||[]).map(w=>`<div class="fact"><strong>${esc(w.point)}</strong><div class="small" style="margin-top:.3rem">${esc(w.detail)}</div>${w.keyTerms&&w.keyTerms.length?`<div class="row" style="margin-top:.4rem">${w.keyTerms.map(x=>`<span class="chip gray">${esc(x)}</span>`).join('')}</div>`:''}</div>`).join(''))}
-    ${pk('👥','The points of view',(p.pointsOfView||[]).map(vv=>`<div class="fact"><strong>${esc(vv.label)}</strong> — <span class="muted small">${esc(vv.who)}</span><div class="small" style="margin-top:.25rem">${esc(vv.summary)}</div>${vv.source?`<div class="tiny muted" style="margin-top:.2rem">Source: ${esc(vv.source)}</div>`:''}</div>`).join(''))}
-    ${pk('📎','Sources to quote — and what for',(p.sources||[]).map(s=>`<div class="fact"><span class="pill">${esc(s.type)}</span> <strong>${esc(s.reference)}</strong><div class="small" style="margin-top:.25rem">${s.snippet?`“${esc(s.snippet)}” — `:''}<em>Use for:</em> ${esc(s.useFor)}</div></div>`).join(''))}
-    ${pk('🛠️','How to do it — the approach',`<p class="small"><strong>Model thesis to adapt:</strong> ${esc(p.workedThesis||'')}</p><ol class="tight">${(p.paragraphPlan||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ol>`)}
-    ${pk('⚠️','What to watch out for (the traps)',`<ul class="tight">${(p.trapsForThisQuestion||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`)}
-    ${pk('📏','The official standard — what A vs B vs C looks like',`${std}<p class="tiny muted" style="margin-top:.5rem">Official assessment standards © TASC, for study.</p>`)}
-    ${pk('⭐','An A-grade paragraph',`<div class="ans">${esc(p.exemplarParagraph||'')}</div>`)}
+    <h1>${ic('book')} Revision notes · Section ${t.section}</h1>
+    <p class="lead">${esc(t.label)} — for <strong>${esc(TRAD)}</strong>. Everything in one place, in clear sections. Press ${ic('sound')} Read to hear it all.</p>
+    ${pk(ic('pin'),'The question',`<p class="prompt">${esc(t.prompt)}</p><div class="row" style="margin-top:.5rem">${t.criteria.map(c=>`<span class="chip">${c} — ${CRIT[c]}</span>`).join('')}</div>`)}
+    ${pk(ic('target'),'Why this question — what it’s really testing',`<ul class="tight">${t.criteria.map(c=>`<li>${esc(CRIT_WHY[c]||'')}</li>`).join('')}</ul>`)}
+    ${pk(ic('books'),'What you need to know',(p.whatToKnow||[]).map(w=>`<div class="fact"><strong>${esc(w.point)}</strong><div class="small" style="margin-top:.3rem">${esc(w.detail)}</div>${w.keyTerms&&w.keyTerms.length?`<div class="row" style="margin-top:.4rem">${w.keyTerms.map(x=>`<span class="chip gray">${esc(x)}</span>`).join('')}</div>`:''}</div>`).join(''))}
+    ${pk(ic('users'),'The points of view',(p.pointsOfView||[]).map(vv=>`<div class="fact"><strong>${esc(vv.label)}</strong> — <span class="muted small">${esc(vv.who)}</span><div class="small" style="margin-top:.25rem">${esc(vv.summary)}</div>${vv.source?`<div class="tiny muted" style="margin-top:.2rem">Source: ${esc(vv.source)}</div>`:''}</div>`).join(''))}
+    ${pk(ic('clip'),'Sources to quote — and what for',(p.sources||[]).map(s=>`<div class="fact"><span class="pill">${esc(s.type)}</span> <strong>${esc(s.reference)}</strong><div class="small" style="margin-top:.25rem">${s.snippet?`“${esc(s.snippet)}” — `:''}<em>Use for:</em> ${esc(s.useFor)}</div></div>`).join(''))}
+    ${pk(ic('list'),'How to do it — the approach',`<p class="small"><strong>Model thesis to adapt:</strong> ${esc(p.workedThesis||'')}</p><ol class="tight">${(p.paragraphPlan||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ol>`)}
+    ${pk(ic('eye'),'What to watch out for (the traps)',`<ul class="tight">${(p.trapsForThisQuestion||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`)}
+    ${pk(ic('badge'),'The official standard — what A vs B vs C looks like',`${std}<p class="tiny muted" style="margin-top:.5rem">Official assessment standards © TASC, for study.</p>`)}
+    ${pk(ic('star'),'An A-grade paragraph',`<div class="ans">${esc(p.exemplarParagraph||'')}</div>`)}
     <div class="row" style="margin:.4rem 0 2.5rem"><button class="btn-primary" id="rvWrite">Now practise this →</button> <button class="btn-ghost" id="rvStudy">Quiz me on it</button></div>`;
   $('#rvBack').onclick=renderHome;$('#rvWrite').onclick=()=>openWrite(key,null);$('#rvStudy').onclick=()=>openStudy(key);
-  show('revise');
+  touch('Revised · '+(t&&t.label?t.label:''));show('revise');
 }
 
 /* ---- boot ---- */
