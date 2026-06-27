@@ -305,6 +305,10 @@ function setBox(id,b){const m=mastery();m[id]=b;localStorage.setItem('sor_master
 function resps(){try{return JSON.parse(localStorage.getItem('sor_resp')||'{}')}catch(e){return{}}}
 function respGet(id){return resps()[id]||'';}
 function respSet(id,v){const r=resps();if(v&&v.trim())r[id]=v;else delete r[id];localStorage.setItem('sor_resp',JSON.stringify(r));}
+function myStoryNotes(key,p){const out=[],r=resps();if(!p)return out;
+  (p.whatToKnow||[]).forEach((w,i)=>{const id='story|'+key+'|'+TRAD+'|k'+i;if(r[id]&&r[id].trim())out.push({title:w.point,mine:r[id].trim()});});
+  (p.pointsOfView||[]).forEach((v,i)=>{const id='story|'+key+'|'+TRAD+'|v'+i;if(r[id]&&r[id].trim())out.push({title:v.label,mine:r[id].trim()});});
+  return out;}
 function cardsFor(key){const p=packFor(key);if(!p)return[];const c=[];
   (p.whatToKnow||[]).forEach((w,i)=>c.push({id:`${key}|${TRAD}|k|${i}`,tag:'Know',q:w.point,a:w.detail,terms:w.keyTerms||[]}));
   (p.pointsOfView||[]).forEach((v,i)=>c.push({id:`${key}|${TRAD}|v|${i}`,tag:'View',q:`Point of view - “${v.label}”: who holds it and what do they argue?`,a:`${v.who}: ${v.summary}`+(v.source?`  ·  Source: ${v.source}`:''),terms:[]}));
@@ -393,7 +397,7 @@ function stimulusSVG(){return `<svg viewBox="0 0 320 120" width="100%" style="ma
   <polygon points="20,40 120,40 140,55 120,70 20,70" fill="var(--accent)"/><text x="30" y="60" fill="#fff" font-size="13" font-weight="700">THIS WAY</text>
   <polygon points="300,52 200,52 180,67 200,82 300,82" fill="var(--ink-soft)"/><text x="208" y="72" fill="#fff" font-size="13" font-weight="700">THAT WAY</text>
   <text x="160" y="116" text-anchor="middle" font-size="9" fill="var(--ink-soft)">Original illustrative stimulus</text></svg>`;}
-function openWrite(key,mk){const t=topic(key),p=packFor(key);curKey=key;mock=mk;const v=$('#v-write');
+function openWrite(key,mk){const t=topic(key),p=packFor(key);curKey=key;mock=mk;const v=$('#v-write');const mine=myStoryNotes(key,p);
   v.innerHTML=`<div class="toolbar"><button class="btn-ghost" id="wBack">← Home</button>
       ${mk?`<span class="chip">Essay ${mk.index+1}/${mk.ids.length}</span>`:''}
       <span class="small"><span class="muted">Words</span> <b id="wc">0</b><span class="muted" id="wt"></span></span>
@@ -404,6 +408,7 @@ function openWrite(key,mk){const t=topic(key),p=packFor(key);curKey=key;mock=mk;
     <p class="prompt" tabindex="0">${esc(t.prompt)}</p>
     <details open class="agrade"><summary>${ic('list')} Plan - the specific roadmap for THIS question</summary><ul class="tight">${(p.paragraphPlan||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
       <p class="small"><strong>Model thesis to adapt:</strong> ${esc(p.workedThesis||'')}</p></details>
+    ${mine.length?`<details open class="agrade" style="border:1px solid var(--accent)"><summary>${ic('pen')} Your own blocks (${mine.length}) - from Story mode</summary><p class="small muted" style="margin:.3rem 0">These are <strong>your</strong> words. Build your paragraphs from them, then add evidence.</p><ul class="tight">${mine.map(m=>`<li><strong>${esc(m.title)}:</strong> ${esc(m.mine)}</li>`).join('')}</ul><button class="btn-ghost" id="insertMine">Add my blocks into the draft below ↓</button></details>`:`<div class="calm small">Tip: do <strong>Story mode</strong> first and write each idea in your own words - they'll appear here, ready to build your essay from.</div>`}
     <details><summary>${ic('clip')} Pull the facts you need (don't memorise - understand)</summary><div id="facts"></div></details>
     <details class="pitfall"><summary>⚠️ Traps that lose marks here</summary><ul class="tight">${(p.trapsForThisQuestion||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></details>
     <label for="essay" class="small muted" style="display:block;margin:.6rem 0 .3rem">Your essay (autosaves):</label>
@@ -418,6 +423,7 @@ function openWrite(key,mk){const t=topic(key),p=packFor(key);curKey=key;mock=mk;
   const ta=$('#essay');ta.value=localStorage.getItem('draft_'+key+'_'+TRAD)||'';
   const cw=()=>{const n=(ta.value.trim().match(/\S+/g)||[]).length;$('#wc').textContent=n;localStorage.setItem('draft_'+key+'_'+TRAD,ta.value);const s=$('#save');s.textContent='saved';setTimeout(()=>s.textContent='',1000);};
   ta.addEventListener('input',cw);cw();
+  const im=$('#insertMine');if(im)im.onclick=()=>{const scaffold=mine.map(m=>'• '+m.mine).join('\n\n');ta.value=(ta.value?ta.value.replace(/\s+$/,'')+'\n\n':'')+scaffold+'\n\n';cw();ta.focus();toast('Your blocks added ✓');};
   $('#wBack').onclick=renderHome;$('#fin').onclick=()=>openReview(key);
   setupTimer((mk?mk.mins:60)*60);show('write');ta.focus();
 }
