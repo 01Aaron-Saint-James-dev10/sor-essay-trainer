@@ -64,7 +64,16 @@
   .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
   footer{max-width:var(--maxw);margin:0 auto;padding:1rem 1.1rem 3rem;color:var(--ink-soft);font-size:.83rem}
   .calm{background:linear-gradient(180deg,var(--accent-soft),transparent);border:1px solid color-mix(in srgb,var(--accent) 20%,transparent);border-radius:12px;padding:.8rem 1rem}
-  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+  .hook{display:inline-block;background:var(--accent-soft);color:var(--accent-ink);font-weight:700;padding:.32rem .65rem;border-radius:999px;margin:.18rem;font-size:.95rem;border:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
+  details.more{border:0;padding:0;margin:.7rem 0 0;background:transparent}
+  details.more>summary{font-weight:600;color:var(--accent-ink);font-size:.9rem;padding:.3rem 0}
+  details.more>summary::before{content:"▸ "} details.more[open]>summary::before{content:"▾ "}
+  details.more .small{background:var(--surface-2);border-radius:10px;padding:.7rem .85rem;line-height:1.6;margin-top:.3rem}
+  .reveal-in{animation:flipin .34s ease}
+  @keyframes flipin{from{opacity:0;transform:perspective(600px) rotateX(-14deg) translateY(8px)}to{opacity:1;transform:none}}
+  .toast{position:fixed;left:50%;bottom:16%;transform:translateX(-50%);background:var(--good);color:#fff;padding:.55rem 1.1rem;border-radius:999px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.22);z-index:60;animation:pop .28s ease}
+  @keyframes pop{from{opacity:0;transform:translateX(-50%) scale(.7)}to{opacity:1;transform:translateX(-50%) scale(1)}}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
@@ -110,6 +119,7 @@ function speak(t){ if(!('speechSynthesis'in window)){announce('Read-aloud not su
 function setRead(on){speaking=on;$('#readBtn').setAttribute('aria-pressed',on?'true':'false');$('#readBtn').textContent=on?'⏹ Stop':'🔊 Read';}
 $('#readBtn').onclick=()=>{ if(speaking){window.speechSynthesis.cancel();setRead(false);return;} const el=$('main section:not([hidden])'); speak(el?el.innerText.slice(0,4500):'Nothing to read.'); };
 function announce(m){let r=$('#live');if(!r){r=document.createElement('div');r.id='live';r.className='visually-hidden';r.setAttribute('aria-live','assertive');document.body.appendChild(r);}r.textContent='';setTimeout(()=>r.textContent=m,30);}
+function toast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>{t.remove();},1400);announce(msg);}
 
 /* ---- views ---- */
 function show(v){['home','study','write','review','prepare','revise','sources','pdf','loading'].forEach(x=>$('#v-'+x).hidden=(x!==v));window.scrollTo({top:0});if(speaking){window.speechSynthesis.cancel();setRead(false);}}
@@ -167,19 +177,25 @@ function openStudy(key){const t=topic(key),p=packFor(key);const v=$('#v-study');
     <div class="card"><div class="row" style="justify-content:space-between"><strong>Readiness</strong><span class="small muted" id="sPct">${readiness(key)}%</span></div>
       <div class="bar-track" style="margin-top:.5rem"><div class="bar-fill" id="sBar" style="width:${readiness(key)}%"></div></div></div>
     <div id="quizWrap"></div>
-    <details><summary>📖 Read all the notes for this question</summary><div id="notesAll"></div></details>`;
-  $('#sBack').onclick=renderHome;
-  renderNotes(key);nextCard();show('study');
+    <div class="row" style="margin-top:.7rem"><button class="btn-ghost" id="toNotes">📖 See the full written notes for this question</button></div>`;
+  $('#sBack').onclick=renderHome;$('#toNotes').onclick=()=>openRevise(key);
+  nextCard();show('study');
 }
 function nextCard(){const w=$('#quizWrap');const m=mastery();
   session.queue=session.cards.slice().filter(c=>(m[c.id]||0)<3).sort((a,b)=>(m[a.id]||0)-(m[b.id]||0));
   if(!session.queue.length){w.innerHTML=`<div class="card calm" style="text-align:center"><h3>🎉 All banked for now.</h3><p class="muted small">This section is green. Come back tomorrow — spacing makes it stick.</p><button class="btn-primary" id="toWrite">Try writing this one →</button></div>`;$('#toWrite').onclick=()=>openWrite(session.key,null);return;}
-  const c=session.queue[0];
-  w.innerHTML=`<div class="card"><div class="row" style="justify-content:space-between"><span class="pill">${c.tag}</span><span class="tiny muted">${session.cards.filter(x=>(m[x.id]||0)>=3).length}/${session.cards.length} banked</span></div>
-    <div class="qcard"><div id="qFront">${esc(c.q)}</div><div id="qBack" hidden><div class="ans">${esc(c.a)}${c.terms&&c.terms.length?`<div style="margin-top:.6rem" class="row">${c.terms.map(t=>`<span class="chip gray">${esc(t)}</span>`).join('')}</div>`:''}</div></div></div>
-    <div class="row" id="qBtns"><button class="btn-primary" id="reveal" style="margin:auto">Show answer</button></div></div>`;
-  $('#reveal').onclick=()=>{$('#qBack').hidden=false;$('#qBtns').innerHTML=`<button class="btn-ghost" id="notyet">↺ Not yet</button><button class="btn-good" id="got" style="margin-left:auto">✓ Got it</button>`;
-    $('#got').onclick=()=>{setBox(c.id,(mastery()[c.id]||0)+1);bump();};$('#notyet').onclick=()=>{setBox(c.id,0);bump();};};
+  const c=session.queue[0];const banked=session.cards.filter(x=>(m[x.id]||0)>=3).length;
+  const hooks=(c.terms&&c.terms.length)?`<div style="margin:.1rem 0 .2rem"><div class="small" style="margin-bottom:.35rem"><strong>🔑 The hooks to remember</strong></div><div>${c.terms.map(t=>`<span class="hook">${esc(t)}</span>`).join('')}</div></div>`:'';
+  const cue=(c.terms&&c.terms.length)?`💭 Try to recall ${c.terms.length} key terms (in your head or out loud), then reveal.`:`💭 Answer in your head, then reveal.`;
+  w.innerHTML=`<div class="card"><div class="row" style="justify-content:space-between"><span class="pill">${c.tag}</span><span class="tiny muted">${banked}/${session.cards.length} banked</span></div>
+    <div class="qcard"><div id="qFront"><div>${esc(c.q)}</div><div class="tiny muted" style="margin-top:.7rem">${cue}</div></div><div id="qBack" hidden></div></div>
+    <div class="row" id="qBtns"><button class="btn-primary" id="reveal" style="margin:auto">👀 Show answer</button></div></div>`;
+  $('#reveal').onclick=()=>{
+    const body=(c.terms&&c.terms.length)?`${hooks}<details class="more"><summary>Read the full explanation</summary><div class="small">${esc(c.a)}</div></details>`:`<div class="small">${esc(c.a)}</div>`;
+    $('#qBack').innerHTML=`<div class="ans reveal-in">${body}</div>`;$('#qBack').hidden=false;$('#qFront').classList.add('muted');
+    $('#qBtns').innerHTML=`<button class="btn-ghost" id="notyet">↺ Not yet</button><button class="btn-good" id="got" style="margin-left:auto">✓ Got it</button>`;
+    $('#got').onclick=()=>{setBox(c.id,(mastery()[c.id]||0)+1);toast('Banked 💚');bump();};
+    $('#notyet').onclick=()=>{setBox(c.id,0);bump();};};
 }
 function bump(){const r=readiness(session.key);$('#sPct').textContent=r+'%';$('#sBar').style.width=r+'%';nextCard();}
 function renderNotes(key){const p=packFor(key);if(!p)return;const n=$('#notesAll');
