@@ -64,6 +64,17 @@
   .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
   footer{max-width:var(--maxw);margin:0 auto;padding:1rem 1.1rem 3rem;color:var(--ink-soft);font-size:.83rem}
   .calm{background:linear-gradient(180deg,var(--accent-soft),transparent);border:1px solid color-mix(in srgb,var(--accent) 20%,transparent);border-radius:12px;padding:.8rem 1rem}
+  body.locked header.app, body.locked main, body.locked footer{display:none}
+  #gate{display:none} body.locked #gate{display:block}
+  .gate-wrap{max-width:640px;margin:0 auto;padding:2.2rem 1.2rem 4rem}
+  .gate-hero{font-size:1.95rem;line-height:1.2;font-weight:800;letter-spacing:-.01em;margin:.4rem 0}
+  .gate-sub{color:var(--ink-soft);font-size:1.05rem;margin:.4rem 0 1.4rem}
+  .gate-pill{display:inline-block;background:var(--accent-soft);color:var(--accent-ink);font-weight:700;font-size:.8rem;padding:.25rem .7rem;border-radius:999px}
+  .gate-val{display:flex;gap:.7rem;align-items:flex-start;margin:.75rem 0}
+  .gate-val .i{font-size:1.4rem;line-height:1.1} .gate-val b{display:block} .gate-val .d{color:var(--ink-soft);font-size:.95rem}
+  .gate-box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.1rem;margin:1.5rem 0}
+  #codeIn{width:100%;font:inherit;font-size:1.1rem;letter-spacing:.12em;text-align:center;text-transform:uppercase;padding:.7rem;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+  #codeErr{color:var(--warn);font-size:.9rem;min-height:1.1rem;margin-top:.4rem}
   .hook{display:inline-block;background:var(--accent-soft);color:var(--accent-ink);font-weight:700;padding:.32rem .65rem;border-radius:999px;margin:.18rem;font-size:.95rem;border:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
   details.more{border:0;padding:0;margin:.7rem 0 0;background:transparent}
   details.more>summary{font-weight:600;color:var(--accent-ink);font-size:.9rem;padding:.3rem 0}
@@ -76,7 +87,24 @@
   @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
-<body>
+<body class="locked">
+<script>try{if(localStorage.getItem('sor_access')==='1')document.body.classList.remove('locked')}catch(e){}</script>
+<div id="gate"><div class="gate-wrap">
+  <span class="gate-pill">REL315124 · Studies of Religion · Level 3</span>
+  <h1 class="gate-hero">Pass your mid-year — the smart way.</h1>
+  <p class="gate-sub">The only study tool built <strong>for this exact exam</strong> — from the real 2023–25 papers, the examiners' reports and the official marking standards. Every fact double-checked.</p>
+  <div class="gate-val"><span class="i" aria-hidden="true">🎯</span><span><b>Know exactly what to study</b><span class="d">The real content, ranked — with a readiness bar so you always know what's left.</span></span></div>
+  <div class="gate-val"><span class="i" aria-hidden="true">✍️</span><span><b>Practise the real exam</b><span class="d">Timed essays in the 2026 style, self-marked on the official A → B → A verb ladder.</span></span></div>
+  <div class="gate-val"><span class="i" aria-hidden="true">🧠</span><span><b>Made to stick</b><span class="d">Built on the two study methods proven to beat re-reading: spaced recall + active retrieval. Read-aloud &amp; dyslexia-friendly.</span></span></div>
+  <div class="gate-box">
+    <label for="codeIn" style="font-weight:700;display:block;margin-bottom:.5rem">🔑 Enter your access code</label>
+    <input id="codeIn" placeholder="REL-XXXXX" autocomplete="off" autocapitalize="characters" aria-label="Access code" />
+    <div id="codeErr" aria-live="polite"></div>
+    <button id="unlockBtn" class="btn-primary" style="width:100%;font-size:1.05rem;margin-top:.5rem">Unlock the study tool →</button>
+    <p class="small muted" style="margin:.8rem 0 0">No code yet? Get one from the student who shared this with you.</p>
+  </div>
+  <p class="small muted">A study aid — not a guarantee. Built by a St Brendan-Shaw student, for St Brendan-Shaw students. Always cross-check with your teacher. Your work stays on your device.</p>
+</div></div>
 <a class="skip" href="#main">Skip to content</a>
 <header class="app"><div class="bar">
   <span class="brand"><span class="dot" aria-hidden="true"></span>SoR Study &amp; Trainer</span>
@@ -108,6 +136,11 @@ const $=(s,el=document)=>el.querySelector(s); const $$=(s,el=document)=>[...el.q
 const esc=s=>String(s==null?'':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 let CONTENT=null, TRAD=localStorage.getItem('sor_trad')||'Christianity';
 const CRIT={C1:'Communication',C3:'Beliefs, values & practices',C6:'The variant',C7:'Contemporary issue',C8:'Points of view'};
+/* ---- access gate (hashed codes — plaintext never stored in the page) ---- */
+const GATE_HASHES=new Set(["7d07859fa38fb42aace3ef4e045f399b4003dbdfd033efb516d3a5f72d538532","d71ad1dd046976c809501dba2953cbcb3f4157bdb7891d4bd0cba92f0a3f66b4","fa61b479eaddbb123829da455d6411156b85fe017cb0547828fcfd2896e4bc4f","078fd77d58034a26b9c5a42b5111537661027f695eea8f0d677b71b77fcd13d6","edd86b1f044f1fe3b5d143cee697d642b366369c4cb99aefb841649d45dc43aa","4efa98ee05a591ad876f45c414153edff5750f81201fbf165386ead96002f9f3","8100fff5df38ec9721e705ae2e185f72beb432baae40e97bc1d0e3e3ef87d09c","8a154deea1fa0e83b87253d0bedfda511a989411990a894bbab03ef8a469a986","c3fa8d74f9b2d2f7eec4da5f4fe613d7bb0b94898e10a46284c475495303b5f3","76e511213cfc6dfd2ff8ab9584532909e32b520e60a659395d9bd9f611fbc730","cec6f85f2efb1043d31758bc2c30ef4d5956bea55251cac5a0425d90cb3a509f","5063ca9ba04ed10fdac7fdc13cbb55a5bf8e6d7a080c4bd6a825b611944136d7","9078d0067143d18a0915604b93e1c428e2ffa5c0a7a39d638068cb66dfd39146","d22633884d92a993f1900a0738276d5c616697a512d6fea54b68f7d14f205de5","2e9d6b6e9f2a34b734febcfec32517431447e0287ffaaff16bca6e362d1c7521","77fbe4b61f5641a101002b8c347c3a95f50288eeb2f004629164511703278560","8b40d525a0242987975331cf84a1cd8fa8b48c676e97885cc2b41b64d6df9cf7","423527b60088412447a4d9a543c45ab67317a7ac4e1061d4e3e430d0bb6254f6","e28f40b453e2c9ed66f1b0ba18db3ad45d3e0c794922ca8fab821b91a8ea27c9","0ed9b5b55a336ec55502b60d54d35abf7ca28429f83f4d65f4d0ccf9ee2b3449","fb263875bcdd5b3bb04f50454dd92ea5fa46de7d1e2f9ae859408b7be3b96a69","00c7ede87da77987d4f7c6b6475c7ebed74fee0824d0ec1b99c06bb8e55831a0","e2ace9d556311355e2123cc3d3d1b07afbe0e5fde2fc32627561fc13e110de56","b7b1671cc9e4a631dffb333856feba27486a0bfe98484505012efe501b46f0ca","b6b92c11e47d80d19c58f17ee7a5ac8e9893bd9666a2acfa6c3191a3484cc136","e156e3f66d2279c80d9ee1b74f6a83614cc68f7dc72b39768da4119617affb9a","116f99ba71184b7f0192acece0c4133a684d2714cdf3062006c7259b8c0c5c41","985b66ed126a2974af1a59029a589393e1b327e4e562a98a20a09731dfe0fddb","1cd1ff3840e405d5363707f6325e7f4c9fb496bf944fcea71605b832dcf42b4b","7cdbc49f1a2f468ada0fb4425851b62f0bc170d6ab82c307c89631bdd0cef9ea"]);
+async function sha256hex(s){const b=new TextEncoder().encode(s);const h=await crypto.subtle.digest('SHA-256',b);return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,'0')).join('');}
+async function tryUnlock(){const el=document.getElementById('codeIn');if(!el)return;const v=el.value.trim().toUpperCase();document.getElementById('codeErr').textContent='';if(!v)return;let hex='';try{hex=await sha256hex(v);}catch(e){}if(GATE_HASHES.has(hex)){localStorage.setItem('sor_access','1');document.body.classList.remove('locked');window.scrollTo({top:0});}else{document.getElementById('codeErr').textContent='That code didn’t work — check it and try again.';el.select();}}
+(function(){const b=document.getElementById('unlockBtn');if(b){b.onclick=tryUnlock;document.getElementById('codeIn').addEventListener('keydown',e=>{if(e.key==='Enter')tryUnlock();});}})();
 
 /* ---- text size + read aloud ---- */
 const FS='sor_fs'; const setFs=v=>{document.documentElement.style.setProperty('--fs',v+'px');localStorage.setItem(FS,v)};
