@@ -3,381 +3,282 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Studies of Religion — Essay Trainer (REL315124)</title>
+<title>Studies of Religion — Study & Exam Trainer (REL315124)</title>
 <style>
   :root{
-    --bg:#faf8f4; --surface:#ffffff; --surface-2:#f3f1ea; --ink:#1d1b16; --ink-soft:#55514a;
-    --line:#e2ddd2; --accent:#6d5ae6; --accent-soft:#ece9fb; --accent-ink:#4a3bc0;
+    --bg:#faf8f4; --surface:#fff; --surface-2:#f3f1ea; --ink:#1d1b16; --ink-soft:#56514a;
+    --line:#e4dfd4; --accent:#6d5ae6; --accent-soft:#ece9fb; --accent-ink:#4a3bc0;
     --good:#1f7a4d; --good-soft:#e6f3ec; --warn:#b45309; --warn-soft:#fbf0df; --gold:#b8860b;
-    --radius:14px; --maxw:880px;
-    --fs:17px;
+    --radius:14px; --maxw:900px; --fs:17px;
   }
-  @media (prefers-color-scheme: dark){
-    :root{ --bg:#16151a; --surface:#1f1e26; --surface-2:#262531; --ink:#ece9f5; --ink-soft:#b3afc2;
-      --line:#33313f; --accent:#9c8cff; --accent-soft:#2a2740; --accent-ink:#c7bcff;
-      --good:#5fcd97; --good-soft:#1d2b24; --warn:#e0a45c; --warn-soft:#2c2418; --gold:#d6a93a; }
-  }
+  @media (prefers-color-scheme: dark){:root{
+    --bg:#16151a; --surface:#1f1e26; --surface-2:#262531; --ink:#ece9f5; --ink-soft:#b4b0c2;
+    --line:#33313f; --accent:#9c8cff; --accent-soft:#2a2740; --accent-ink:#c7bcff;
+    --good:#5fcd97; --good-soft:#1d2b24; --warn:#e0a45c; --warn-soft:#2c2418; --gold:#d6a93a;}}
   *{box-sizing:border-box}
-  html{font-size:var(--fs)}
-  body{
-    margin:0; background:var(--bg); color:var(--ink);
-    font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-    line-height:1.7; letter-spacing:.01em;
-  }
-  .skip{position:absolute;left:-999px;top:0;background:var(--accent);color:#fff;padding:.6rem 1rem;border-radius:0 0 8px 0;z-index:50}
-  .skip:focus{left:0}
-  header.app{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%, transparent);
-    backdrop-filter:saturate(1.2) blur(8px); border-bottom:1px solid var(--line)}
-  .bar{max-width:var(--maxw);margin:0 auto;padding:.7rem 1.2rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
-  .brand{font-weight:800;font-size:1.05rem;letter-spacing:-.01em;margin-right:auto;display:flex;align-items:center;gap:.5rem}
-  .brand .dot{width:11px;height:11px;border-radius:50%;background:var(--accent);display:inline-block}
-  main{max-width:var(--maxw);margin:0 auto;padding:1.4rem 1.2rem 5rem}
-  h1{font-size:1.6rem;line-height:1.25;margin:.2rem 0 .4rem}
-  h2{font-size:1.2rem;margin:1.6rem 0 .6rem}
-  p.lead{color:var(--ink-soft);margin:.2rem 0 1.2rem}
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.1rem 1.2rem;margin:.9rem 0}
-  button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:.55rem .9rem;transition:transform .08s ease, background .15s ease, border-color .15s}
-  button:hover{border-color:var(--accent)}
-  button:active{transform:translateY(1px)}
-  button:focus-visible,a:focus-visible,[tabindex]:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-  .btn-primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}
-  .btn-primary:hover{filter:brightness(1.06);border-color:var(--accent)}
-  .btn-ghost{background:transparent}
-  .row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
-  .chip{display:inline-flex;align-items:center;gap:.35rem;font-size:.8rem;font-weight:700;padding:.2rem .55rem;border-radius:999px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
-  .muted{color:var(--ink-soft)}
-  .small{font-size:.9rem}
-  ul.tight{margin:.3rem 0 .3rem;padding-left:1.2rem}
-  ul.tight li{margin:.25rem 0}
-  .q-list{display:grid;gap:.7rem}
-  .q-item{display:flex;justify-content:space-between;gap:1rem;align-items:center;width:100%;text-align:left}
-  .q-item .meta{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.35rem}
-  .section-tag{font-weight:800;color:var(--accent-ink)}
-  /* writing view */
-  .prompt{font-size:1.12rem;line-height:1.6;background:var(--surface-2);border-left:4px solid var(--accent);padding:.9rem 1rem;border-radius:0 10px 10px 0}
-  .stat{display:flex;gap:.4rem;align-items:baseline}
-  .stat b{font-size:1.25rem;font-variant-numeric:tabular-nums}
-  .timer{font-variant-numeric:tabular-nums;font-weight:800;font-size:1.3rem}
-  .timer.low{color:var(--warn)}
-  textarea{width:100%;min-height:46vh;resize:vertical;border:1px solid var(--line);border-radius:12px;padding:1rem;background:var(--surface);color:var(--ink);font:inherit;line-height:1.8}
-  .toolbar{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;position:sticky;top:54px;background:var(--bg);padding:.5rem 0;z-index:5;border-bottom:1px dashed var(--line);margin-bottom:.6rem}
-  details{border:1px solid var(--line);border-radius:12px;padding:.2rem .9rem;margin:.7rem 0;background:var(--surface)}
-  details>summary{cursor:pointer;font-weight:700;padding:.6rem 0;list-style:none}
-  details>summary::-webkit-details-marker{display:none}
-  details>summary::before{content:"▸ ";color:var(--accent)}
-  details[open]>summary::before{content:"▾ "}
-  .pitfall{background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);border-radius:10px;padding:.2rem .9rem}
-  .agrade{background:var(--good-soft);border:1px solid color-mix(in srgb,var(--good) 30%,transparent);border-radius:10px;padding:.2rem .9rem}
-  /* rubric */
-  .rubric{display:grid;gap:.8rem}
-  .crit{border:1px solid var(--line);border-radius:12px;padding:.8rem .9rem;background:var(--surface)}
-  .ladder{display:grid;grid-template-columns:1fr;gap:.4rem;margin-top:.5rem}
-  .rung{display:flex;gap:.6rem;align-items:flex-start;border:1px solid var(--line);border-radius:9px;padding:.45rem .6rem;cursor:pointer;background:var(--bg)}
-  .rung:hover{border-color:var(--accent)}
-  .rung input{margin-top:.35rem}
-  .rung .lvl{font-weight:800;min-width:1.4rem}
-  .rung.A .lvl{color:var(--gold)} .rung.B .lvl{color:var(--accent-ink)} .rung.C .lvl{color:var(--ink-soft)}
-  .estimate{font-size:1.1rem;font-weight:800}
-  .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  html{font-size:var(--fs)} body{margin:0;background:var(--bg);color:var(--ink);line-height:1.65;
+    font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.01em}
+  .skip{position:absolute;left:-999px;background:var(--accent);color:#fff;padding:.6rem 1rem;z-index:50}.skip:focus{left:0}
+  header.app{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .bar{max-width:var(--maxw);margin:0 auto;padding:.6rem 1.1rem;display:flex;gap:.7rem;align-items:center;flex-wrap:wrap}
+  .brand{font-weight:800;margin-right:auto;display:flex;align-items:center;gap:.5rem}
+  .brand .dot{width:11px;height:11px;border-radius:50%;background:var(--accent)}
+  main{max-width:var(--maxw);margin:0 auto;padding:1.3rem 1.1rem 5rem}
+  h1{font-size:1.55rem;line-height:1.25;margin:.2rem 0 .5rem}h2{font-size:1.2rem;margin:1.4rem 0 .5rem}h3{font-size:1.02rem;margin:1rem 0 .4rem}
+  p.lead{color:var(--ink-soft);margin:.2rem 0 1.1rem}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.05rem 1.15rem;margin:.85rem 0}
+  button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:.55rem .9rem;transition:transform .08s,background .15s,border-color .15s}
+  button:hover{border-color:var(--accent)} button:active{transform:translateY(1px)}
+  button:focus-visible,a:focus-visible,[tabindex]:focus-visible,textarea:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+  .btn-primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}.btn-primary:hover{filter:brightness(1.07)}
+  .btn-ghost{background:transparent} .btn-good{background:var(--good);color:#fff;border-color:var(--good);font-weight:700}
+  .row{display:flex;gap:.55rem;flex-wrap:wrap;align-items:center}
+  .chip{display:inline-flex;align-items:center;gap:.3rem;font-size:.78rem;font-weight:700;padding:.18rem .55rem;border-radius:999px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid color-mix(in srgb,var(--accent) 22%,transparent)}
+  .chip.gray{background:var(--surface-2);color:var(--ink-soft);border-color:var(--line)}
+  .muted{color:var(--ink-soft)} .small{font-size:.9rem} .tiny{font-size:.8rem}
+  ul.tight{margin:.3rem 0;padding-left:1.2rem} ul.tight li{margin:.28rem 0}
+  .grid{display:grid;gap:.8rem} .g2{grid-template-columns:1fr 1fr} @media(max-width:620px){.g2{grid-template-columns:1fr}}
+  .mode{display:flex;gap:.9rem;align-items:flex-start;text-align:left;width:100%}
+  .mode .ico{font-size:1.7rem;line-height:1} .mode .t{font-weight:800} .mode .d{color:var(--ink-soft);font-size:.92rem}
   .seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
-  .seg button{border:0;border-radius:0;border-right:1px solid var(--line)}
-  .seg button:last-child{border-right:0}
+  .seg button{border:0;border-radius:0;border-right:1px solid var(--line)} .seg button:last-child{border-right:0}
   .seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
-  footer{max-width:var(--maxw);margin:0 auto;padding:1rem 1.2rem 3rem;color:var(--ink-soft);font-size:.85rem}
-  @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
-  @media (max-width:560px){.bar{padding:.6rem .8rem}main{padding:1rem .8rem 5rem}}
+  .bar-track{height:10px;border-radius:6px;background:var(--surface-2);overflow:hidden} .bar-fill{height:100%;background:var(--good);border-radius:6px;transition:width .3s}
+  .prompt{font-size:1.1rem;line-height:1.55;background:var(--surface-2);border-left:4px solid var(--accent);padding:.85rem 1rem;border-radius:0 10px 10px 0}
+  details{border:1px solid var(--line);border-radius:12px;padding:.1rem .9rem;margin:.6rem 0;background:var(--surface)}
+  summary{cursor:pointer;font-weight:700;padding:.6rem 0;list-style:none} summary::-webkit-details-marker{display:none}
+  summary::before{content:"▸ ";color:var(--accent)} details[open]>summary::before{content:"▾ "}
+  textarea{width:100%;min-height:40vh;resize:vertical;border:1px solid var(--line);border-radius:12px;padding:1rem;background:var(--surface);color:var(--ink);font:inherit;line-height:1.75}
+  .toolbar{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;position:sticky;top:52px;background:var(--bg);padding:.5rem 0;border-bottom:1px dashed var(--line);margin-bottom:.6rem;z-index:5}
+  .timer{font-variant-numeric:tabular-nums;font-weight:800;font-size:1.25rem} .timer.low{color:var(--warn)}
+  .qcard{min-height:34vh;display:flex;flex-direction:column;justify-content:center;text-align:center;gap:1rem;font-size:1.15rem}
+  .ans{background:var(--good-soft);border:1px solid color-mix(in srgb,var(--good) 30%,transparent);border-radius:12px;padding:1rem;text-align:left;font-size:1rem;line-height:1.6}
+  .pill{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.4px;padding:.15rem .5rem;border-radius:6px;background:var(--accent-soft);color:var(--accent-ink)}
+  .fact{border:1px solid var(--line);border-radius:10px;padding:.6rem .8rem;margin:.45rem 0;background:var(--surface)}
+  .check{display:flex;gap:.6rem;align-items:flex-start;padding:.5rem .2rem;border-bottom:1px solid var(--line)} .check input{margin-top:.35rem;width:1.1rem;height:1.1rem}
+  .agrade{background:var(--good-soft);border-color:color-mix(in srgb,var(--good) 30%,transparent)}
+  .pitfall{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 30%,transparent)}
+  .ladder label{display:flex;gap:.55rem;align-items:flex-start;border:1px solid var(--line);border-radius:9px;padding:.5rem .6rem;margin:.35rem 0;cursor:pointer;background:var(--bg)} .ladder label:hover{border-color:var(--accent)}
+  .lvl{font-weight:800;min-width:1.3rem} .A .lvl{color:var(--gold)} .B .lvl{color:var(--accent-ink)} .C .lvl{color:var(--ink-soft)}
+  .md h2{font-size:1.1rem;margin:1.1rem 0 .4rem} .md h3{font-size:.98rem} .md strong{color:var(--ink)}
+  .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  footer{max-width:var(--maxw);margin:0 auto;padding:1rem 1.1rem 3rem;color:var(--ink-soft);font-size:.83rem}
+  .calm{background:linear-gradient(180deg,var(--accent-soft),transparent);border:1px solid color-mix(in srgb,var(--accent) 20%,transparent);border-radius:12px;padding:.8rem 1rem}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="app">
-  <div class="bar">
-    <span class="brand"><span class="dot" aria-hidden="true"></span>SoR Essay Trainer</span>
-    <div class="seg" role="group" aria-label="Text size">
-      <button id="textDown" aria-label="Decrease text size">A−</button>
-      <button id="textUp" aria-label="Increase text size">A+</button>
-    </div>
-    <button id="readToggle" class="btn-ghost" aria-pressed="false" title="Read the current question and plan aloud">🔊 Read aloud</button>
-    <button id="homeBtn" class="btn-ghost">⌂ Home</button>
-  </div>
-</header>
+<header class="app"><div class="bar">
+  <span class="brand"><span class="dot" aria-hidden="true"></span>SoR Study &amp; Trainer</span>
+  <span class="seg" role="group" aria-label="Your second tradition focus" id="tradSeg"></span>
+  <span class="seg" role="group" aria-label="Text size"><button id="tDown" aria-label="Smaller text">A−</button><button id="tUp" aria-label="Larger text">A+</button></span>
+  <button id="readBtn" class="btn-ghost" aria-pressed="false">🔊 Read</button>
+  <button id="homeBtn" class="btn-ghost">⌂ Home</button>
+</div></header>
 
 <main id="main">
-  <!-- HOME -->
-  <section id="view-home" aria-labelledby="home-h">
-    <h1 id="home-h">Practice the way you'll be examined</h1>
-    <p class="lead">REL315124 is an <strong>essay</strong> exam. This trainer gives you original questions in the exact 2026 style, a planning scaffold, a timer, and a self-mark built on the official <strong>A-grade verb ladder</strong> and what examiners actually reward.</p>
-
-    <div class="card">
-      <h2 style="margin-top:.2rem">Timed mock — write under the clock</h2>
-      <p class="small muted">Your mid-year is likely two essays in two hours. Pick how many essays and how long each.</p>
-      <div class="row" style="margin:.4rem 0 .2rem">
-        <label class="small">Essays:
-          <select id="mockCount">
-            <option value="1">1</option>
-            <option value="2" selected>2</option>
-            <option value="3">3</option>
-          </select>
-        </label>
-        <label class="small">Minutes each:
-          <select id="mockMins">
-            <option value="40">40</option>
-            <option value="60" selected>60</option>
-          </select>
-        </label>
-        <button class="btn-primary" id="startMock">▶ Start timed mock</button>
-      </div>
-    </div>
-
-    <h2>Or practise one question</h2>
-    <div class="q-list" id="qList" role="list"></div>
-  </section>
-
-  <!-- WRITE -->
-  <section id="view-write" hidden aria-labelledby="write-h">
-    <div class="toolbar">
-      <button class="btn-ghost" id="backHome">← Back</button>
-      <span id="mockProgress" class="chip" hidden></span>
-      <span class="stat" aria-live="off"><span class="muted small">Words</span> <b id="wordCount">0</b><span class="muted small" id="wordTarget"></span></span>
-      <span class="stat" style="margin-left:auto"><span class="muted small">Time</span> <span class="timer" id="timer" role="timer" aria-live="off">00:00</span></span>
-      <button id="timerToggle">Pause</button>
-    </div>
-
-    <h1 id="write-h" class="visually-hidden">Write your essay</h1>
-    <div class="row" id="critRow" style="margin-bottom:.5rem"></div>
-    <p class="prompt" id="promptText" tabindex="0"></p>
-
-    <details id="planBox">
-      <summary>📝 Plan first (5 min) — the Probe-Why ladder</summary>
-      <ul class="tight" id="planList"></ul>
-      <p class="small muted">Tip: a 5-minute plan beats a fast start. Examiners reward a clear thesis + roadmap.</p>
-    </details>
-
-    <details class="agrade" id="aGradeBox">
-      <summary>⭐ What an A-grade answer does</summary>
-      <ul class="tight" id="aGradeList"></ul>
-    </details>
-
-    <details class="pitfall" id="pitfallBox">
-      <summary>⚠️ Examiner traps to avoid</summary>
-      <ul class="tight" id="pitfallList"></ul>
-    </details>
-
-    <label for="essay" class="small muted" style="display:block;margin:.6rem 0 .3rem">Your essay (autosaves):</label>
-    <textarea id="essay" aria-describedby="promptText" placeholder="Open with the question + your thesis + a roadmap of your paragraphs…"></textarea>
-
-    <div class="row" style="margin-top:.8rem">
-      <button class="btn-primary" id="finishBtn">✓ Finish & self-mark</button>
-      <button class="btn-ghost" id="clearBtn">Clear draft</button>
-      <span class="small muted" id="saveStatus" aria-live="polite"></span>
-    </div>
-  </section>
-
-  <!-- REVIEW -->
-  <section id="view-review" hidden aria-labelledby="rev-h">
-    <button class="btn-ghost" id="reviewBack">← Back to writing</button>
-    <h1 id="rev-h">Self-mark on the verb ladder</h1>
-    <p class="lead">Be honest: for each criterion, which verb did your essay actually reach? <strong>Explain = C · Analyse = B · Evaluate = A.</strong></p>
-    <div class="rubric" id="rubricBox"></div>
-    <div class="card" style="margin-top:1rem">
-      <div class="row" style="justify-content:space-between">
-        <div><span class="muted small">Your self-estimate</span><br><span class="estimate" id="estimate">—</span></div>
-        <div class="muted small" id="wordSummary"></div>
-      </div>
-      <p class="small muted" style="margin:.6rem 0 0">A self-estimate, not an official grade — it shows where to push <em>explain → analyse → evaluate</em>.</p>
-    </div>
-    <div id="nextMockWrap" class="row" style="margin-top:1rem" hidden>
-      <button class="btn-primary" id="nextMock">Next essay →</button>
-    </div>
-  </section>
+  <section id="v-home" aria-labelledby="hh"></section>
+  <section id="v-study" hidden></section>
+  <section id="v-write" hidden></section>
+  <section id="v-review" hidden></section>
+  <section id="v-prepare" hidden></section>
+  <section id="v-loading"><p class="lead">Loading your study content…</p></section>
 </main>
 
 <footer>
-  <p>Built from the official REL315124 course document, External Assessment Specifications, the 2023/24/25 papers &amp; the 2024/25 examiners' reports. Questions here are <strong>original, in-style</strong> — not reproduced exam text. Your work stays on this device.</p>
+  <p>Original, in-style questions &amp; study notes built from the official REL315124 course document, specifications, the 2023–25 papers &amp; examiners' reports — every fact double-checked. <strong>No copyrighted exam text or textbook is reproduced.</strong> These are AI-assisted study notes: always cross-check with your teacher. Your work stays on this device.</p>
 </footer>
 
 <script>
 "use strict";
-/* ---------- DATA: original in-style questions + examiner-grounded coaching ---------- */
-const RUBRIC = {
-  C1:{name:"Communication (C1)", C:"Structures logically; uses relevant terminology; clear.", B:"Appropriately structures; clear style for purpose & audience.", A:"Effectively structures; precise terminology; strong control of language."},
-  C3:{name:"Beliefs, values & practices (C3)", C:"Explains beliefs & practices; identifies their significance.", B:"Analyses beliefs & practices; describes their significance.", A:"Evaluates significance; critically analyses practices & different perspectives."},
-  C6:{name:"The variant (C6)", C:"Discusses two variants of the tradition.", B:"Analyses differences between the two variants.", A:"Critically analyses origin, belief & practice differences, conflict & cooperation."},
-  C7:{name:"Contemporary issue (C7)", C:"Explains the tradition's response to the issue.", B:"Analyses how beliefs & practices shape the response.", A:"Evaluates the response & draws justified conclusions."},
-  C8:{name:"Points of view (C8)", C:"Identifies different points of view within the tradition.", B:"Analyses the points of view.", A:"Critically evaluates the coherence & consistency of multiple points of view."}
-};
-const QUESTIONS = [
-  { id:"A1", section:"A", title:"The divide between two variants (claim)", criteria:["C1","C3","C6"], words:800, mins:60,
-    prompt:"“Even small differences between groups within a religion can shape how people live.” With reference to a religious tradition you have studied, briefly explain what led to the divide between two (2) variants. Analyse the differences in belief and practice, the impact of these differences, and the ongoing cooperation or conflict between the variants and their adherents.",
-    plan:["Name your TWO variants only (e.g. Catholic ↔ Anglican; Orthodox ↔ Reform Judaism).","In one sentence: what/when was the historical divide?","One belief difference + one practice difference — start from a practice (Eucharist, Shabbat) and draw out the belief.","The impact on how adherents actually live.","One example of conflict AND one of cooperation (e.g. an ecumenical movement, shared prayer)."],
-    aGrade:["Reference the statement throughout — not only the intro/conclusion.","Evaluate the SIGNIFICANCE of the differences, don't just describe them.","Be precise: name events, movements and sources.","Show cooperation as well as conflict."],
-    pitfalls:["Don't sprawl across many subvariants — stick to TWO.","Anglicans ARE Protestants; the Great Schism is NOT the Reformation.","Never write “all Protestants believe…” / “all Orthodox Jews practise…”.","Don't leave variants to the last paragraph — you can't pass C6 without them."] },
-  { id:"A2", section:"A", title:"Responding to a stimulus image", criteria:["C1","C3","C6"], words:800, mins:60,
-    prompt:"Stimulus: a road sign with two arrows — one labelled ‘RIGHT WAY’, the other ‘WRONG WAY’. How might adherents of two (2) variants within a religious tradition you have studied respond differently to this image? Analyse the differences in belief or teaching behind their responses, and evaluate whether these differences lead to cooperation or conflict.",
-    plan:["What might the image mean for your tradition (one 'right' path vs many paths)?","Pick TWO variants and their likely response to that idea.","The belief/teaching behind each response.","Where this causes conflict — and where cooperation.","A clear thesis that ties the image to your analysis."],
-    aGrade:["Connect the stimulus to beliefs throughout the essay.","Evaluate (not just state) whether differences help or hinder cooperation.","Use accurate, specific examples and terminology."],
-    pitfalls:["Don't ignore the image and dump a prepared variant essay.","Don't reduce a variant to a caricature.","Keep to two variants."] },
-  { id:"B3", section:"B", title:"Religious response to suffering", criteria:["C1","C3","C7"], words:800, mins:60,
-    prompt:"Drawing on the beliefs, values and practices of the second religious tradition you have studied: how has the tradition's understanding of human nature and purpose influenced its understanding of suffering and its proposed responses to suffering?",
-    plan:["State the tradition's view of human nature & purpose (the divine, the human condition).","How does that shape what suffering MEANS in the tradition?","Two or three responses to suffering: ritual/practice, guidance from leaders, story/text.","A case study that ILLUSTRATES the response (not a history recount).","Conclusion: a justified conclusion about the approach."],
-    aGrade:["Address 'human nature & purpose → suffering' explicitly (key knowledge most students miss).","Link beliefs & practices BACK to suffering in every paragraph.","Support with quotes / scholars / sacred text.","End with evaluation, not summary."],
-    pitfalls:["Don't write a HISTORY essay (e.g. recounting the Holocaust as events).","The case study shows the RESPONSE to suffering, not the event.","Accuracy: avoid errors like 'attended chapel' / 'believed in reincarnation' for the wrong tradition."] },
-  { id:"B4", section:"B", title:"Religious response to an ethical issue", criteria:["C1","C3","C7"], words:800, mins:60,
-    prompt:"Drawing on the beliefs, values and practices of the second tradition you have studied: how might adherents respond to a contemporary ethical issue, and what conclusions can be drawn about this response and the reasons for it?",
-    plan:["Choose an ethical issue genuinely tied to your tradition.","The belief that underpins the view (e.g. sanctity of life).","The guidance source: commandment / precept / leader / sacred text.","The response itself — with an example.","Conclusion: what can be concluded, and why."],
-    aGrade:["Anchor the response in the RELIGION (e.g. Aquinas' Natural Law = Catholic; Fletcher's Situation Ethics = Protestant).","Use sacred sources (Ten Commandments, Beatitudes, scripture).","Analyse conclusions AND the reasons for them."],
-    pitfalls:["Don't discuss utilitarianism/Kant WITHOUT linking to the tradition — examiners say move away from free-floating frameworks.","'Double Effect' is often misused — only use it if you understand it.","If you answer this, you cannot also answer Section C 'religious ethics' (Q7)."] },
-  { id:"C5", section:"C", title:"Depth study — the place of women", criteria:["C1","C3","C8"], words:800, mins:60,
-    prompt:"Outline and explain change or lack of change in your tradition's teaching on the place of women in religion, and the impact of this change or lack of change. Analyse the different points of view within the tradition. Draw on your depth study and use primary and secondary sources.",
-    plan:["Name your depth-study tradition and your thesis.","The teaching then vs now — change OR continuity.","The impact on adherents.","At least two points of view within the tradition.","Sources: a sacred/primary source + a scholar/secondary source."],
-    aGrade:["Address 'change or lack of change' in the exact words of the question.","Critically evaluate the coherence/consistency of the points of view.","Cite primary AND secondary sources — the question demands it."],
-    pitfalls:["Don't generalise about 'oppression in the world' with no religion attached.","Don't drift into a rights/ethics essay — keep it on women & this tradition.","Don't skip practices — examiners say they're routinely missed."] },
-  { id:"C8", section:"C", title:"Depth study — faith & science", criteria:["C1","C3","C8"], words:800, mins:60,
-    prompt:"Outline and explain change or lack of change in your tradition's response to the challenge brought by science and scientific endeavour, and the impact of this. Analyse different points of view within the tradition. Draw on your depth study and use primary and secondary sources.",
-    plan:["Your tradition + a clear thesis on whether faith & science conflict, coexist or integrate.","A concrete case (e.g. cosmology, evolution, medical science) — change or continuity in the teaching.","Impact on adherents.","Two contrasting points of view within the tradition.","Primary + secondary evidence."],
-    aGrade:["Tie every point to the religious tradition (not 'science in general').","Critically analyse the points of view, don't just list them.","Use real facts/sources — weak answers had none."],
-    pitfalls:["Don't talk about science generally with no religion attached.","Address 'change or lack of change' explicitly.","Mention and analyse practices, not only beliefs."] }
-];
+const $=(s,el=document)=>el.querySelector(s); const $$=(s,el=document)=>[...el.querySelectorAll(s)];
+const esc=s=>String(s==null?'':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+let CONTENT=null, TRAD=localStorage.getItem('sor_trad')||'Christianity';
+const CRIT={C1:'Communication',C3:'Beliefs, values & practices',C6:'The variant',C7:'Contemporary issue',C8:'Points of view'};
 
-/* ---------- state ---------- */
-const $ = (s,el=document)=>el.querySelector(s);
-const $$ = (s,el=document)=>[...el.querySelectorAll(s)];
-let state = { qid:null, timerId:null, remaining:0, running:false, mock:null };
-
-/* ---------- text size ---------- */
-const FS_KEY="sor_fs";
-function applyFs(v){ document.documentElement.style.setProperty('--fs', v+'px'); localStorage.setItem(FS_KEY,v); }
-(function(){ const v=+(localStorage.getItem(FS_KEY)||17); applyFs(Math.min(22,Math.max(15,v))); })();
-$("#textUp").onclick=()=>applyFs(Math.min(22,(+localStorage.getItem(FS_KEY)||17)+1));
-$("#textDown").onclick=()=>applyFs(Math.max(15,(+localStorage.getItem(FS_KEY)||17)-1));
-
-/* ---------- views ---------- */
-function show(view){ ["home","write","review"].forEach(v=>{ $("#view-"+v).hidden = (v!==view); }); window.scrollTo({top:0}); }
-
-/* ---------- home list ---------- */
-function renderHome(){
-  const list=$("#qList"); list.innerHTML="";
-  QUESTIONS.forEach(q=>{
-    const b=document.createElement("button");
-    b.className="q-item card"; b.setAttribute("role","listitem");
-    b.innerHTML=`<span><span class="section-tag">Section ${q.section}</span> &middot; ${q.title}
-      <span class="meta">${q.criteria.map(c=>`<span class='chip'>${c}</span>`).join("")}
-      <span class='chip' style='background:var(--surface-2);color:var(--ink-soft);border-color:var(--line)'>~${q.words} words &middot; ${q.mins} min</span></span></span>
-      <span aria-hidden="true">›</span>`;
-    b.onclick=()=>openQuestion(q.id,null);
-    list.appendChild(b);
-  });
-}
-
-/* ---------- open a question ---------- */
-function openQuestion(qid, mock){
-  const q=QUESTIONS.find(x=>x.id===qid); if(!q) return;
-  state.qid=qid; state.mock=mock;
-  $("#promptText").textContent=q.prompt;
-  $("#critRow").innerHTML = q.criteria.map(c=>`<span class="chip" title="${RUBRIC[c].name}">${c} — ${RUBRIC[c].name.replace(/ \(C\d\)/,'')}</span>`).join("");
-  $("#planList").innerHTML=q.plan.map(p=>`<li>${p}</li>`).join("");
-  $("#aGradeList").innerHTML=q.aGrade.map(p=>`<li>${p}</li>`).join("");
-  $("#pitfallList").innerHTML=q.pitfalls.map(p=>`<li>${p}</li>`).join("");
-  $("#wordTarget").textContent=" / ~"+q.words;
-  const saved=localStorage.getItem("draft_"+qid)||"";
-  $("#essay").value=saved; updateWords();
-  $("#planBox").open=true; $("#aGradeBox").open=false; $("#pitfallBox").open=false;
-  // mock progress
-  const mp=$("#mockProgress");
-  if(mock){ mp.hidden=false; mp.textContent=`Essay ${mock.index+1} of ${mock.ids.length}`; }
-  else mp.hidden=true;
-  // timer
-  const mins = mock? mock.mins : q.mins;
-  setupTimer(mins*60);
-  show("write"); $("#essay").focus();
-}
-
-/* ---------- timer ---------- */
-function fmt(s){ s=Math.max(0,s); const m=Math.floor(s/60), ss=s%60; return String(m).padStart(2,"0")+":"+String(ss).padStart(2,"0"); }
-function setupTimer(seconds){
-  clearInterval(state.timerId); state.remaining=seconds; state.running=true;
-  $("#timerToggle").textContent="Pause"; renderTimer();
-  state.timerId=setInterval(()=>{ if(state.running){ state.remaining--; renderTimer(); if(state.remaining<=0){ state.running=false; clearInterval(state.timerId); announce("Time is up. Finish your sentence and self-mark."); } } },1000);
-}
-function renderTimer(){ const t=$("#timer"); t.textContent=fmt(state.remaining); t.classList.toggle("low", state.remaining<=300); }
-$("#timerToggle").onclick=()=>{ state.running=!state.running; $("#timerToggle").textContent=state.running?"Pause":"Resume"; };
-
-/* ---------- words + autosave ---------- */
-function countWords(s){ const m=s.trim().match(/\S+/g); return m?m.length:0; }
-let saveT=null;
-function updateWords(){
-  const v=$("#essay").value; $("#wordCount").textContent=countWords(v);
-  if(state.qid){ clearTimeout(saveT); saveT=setTimeout(()=>{ localStorage.setItem("draft_"+state.qid,v); const st=$("#saveStatus"); st.textContent="saved"; setTimeout(()=>st.textContent="",1200); },500); }
-}
-$("#essay").addEventListener("input",updateWords);
-$("#clearBtn").onclick=()=>{ if(confirm("Clear this draft?")){ $("#essay").value=""; localStorage.removeItem("draft_"+state.qid); updateWords(); } };
-
-/* ---------- read aloud ---------- */
+/* ---- text size + read aloud ---- */
+const FS='sor_fs'; const setFs=v=>{document.documentElement.style.setProperty('--fs',v+'px');localStorage.setItem(FS,v)};
+setFs(Math.min(22,Math.max(15,+(localStorage.getItem(FS)||17))));
+$('#tUp').onclick=()=>setFs(Math.min(22,(+localStorage.getItem(FS)||17)+1));
+$('#tDown').onclick=()=>setFs(Math.max(15,(+localStorage.getItem(FS)||17)-1));
 let speaking=false;
-function speak(text){ if(!("speechSynthesis"in window)) {announce("Read-aloud isn't supported in this browser."); return;} window.speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.rate=.96; u.onend=()=>{speaking=false; setRead(false);}; window.speechSynthesis.speak(u); speaking=true; setRead(true); }
-function setRead(on){ $("#readToggle").setAttribute("aria-pressed",on?"true":"false"); $("#readToggle").textContent=on?"⏹ Stop":"🔊 Read aloud"; }
-$("#readToggle").onclick=()=>{
-  if(speaking){ window.speechSynthesis.cancel(); speaking=false; setRead(false); return; }
-  const q=QUESTIONS.find(x=>x.id===state.qid);
-  if(!q){ announce("Open a question first."); return; }
-  speak("Question. "+q.prompt+" . Plan. "+q.plan.join(". "));
-};
+function speak(t){ if(!('speechSynthesis'in window)){announce('Read-aloud not supported here');return;} window.speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t);u.rate=.96;u.onend=()=>setRead(false);window.speechSynthesis.speak(u);setRead(true);}
+function setRead(on){speaking=on;$('#readBtn').setAttribute('aria-pressed',on?'true':'false');$('#readBtn').textContent=on?'⏹ Stop':'🔊 Read';}
+$('#readBtn').onclick=()=>{ if(speaking){window.speechSynthesis.cancel();setRead(false);return;} const el=$('main section:not([hidden])'); speak(el?el.innerText.slice(0,4500):'Nothing to read.'); };
+function announce(m){let r=$('#live');if(!r){r=document.createElement('div');r.id='live';r.className='visually-hidden';r.setAttribute('aria-live','assertive');document.body.appendChild(r);}r.textContent='';setTimeout(()=>r.textContent=m,30);}
 
-/* ---------- announce (a11y live region) ---------- */
-function announce(msg){ let r=$("#live"); if(!r){ r=document.createElement("div"); r.id="live"; r.className="visually-hidden"; r.setAttribute("aria-live","assertive"); document.body.appendChild(r);} r.textContent=""; setTimeout(()=>r.textContent=msg,30); }
+/* ---- views ---- */
+function show(v){['home','study','write','review','prepare','loading'].forEach(x=>$('#v-'+x).hidden=(x!==v));window.scrollTo({top:0});if(speaking){window.speechSynthesis.cancel();setRead(false);}}
+function packFor(key){return (CONTENT.packs||{})[key+'|'+TRAD]||null;}
+function topic(key){return CONTENT.topics.find(t=>t.key===key);}
 
-/* ---------- review / self-mark ---------- */
-function openReview(){
-  const q=QUESTIONS.find(x=>x.id===state.qid); if(!q) return;
-  const box=$("#rubricBox"); box.innerHTML="";
-  q.criteria.forEach(c=>{
-    const r=RUBRIC[c];
-    const div=document.createElement("div"); div.className="crit";
-    div.innerHTML=`<strong>${r.name}</strong>
-      <div class="ladder" role="radiogroup" aria-label="${r.name}">
-        ${["C","B","A"].map(l=>`<label class="rung ${l}"><input type="radio" name="rb_${c}" value="${l}"><span class="lvl">${l}</span><span>${r[l]}</span></label>`).join("")}
-      </div>`;
-    box.appendChild(div);
-  });
-  $$("#rubricBox input[type=radio]").forEach(i=>i.addEventListener("change",computeEstimate));
-  const w=countWords($("#essay").value);
-  $("#wordSummary").innerHTML=`You wrote <b>${w}</b> words${w<450?" — examiners warn ~2 pages is too short; aim deeper.":" — good length for depth."}`;
-  $("#estimate").textContent="—";
-  // mock next
-  const wrap=$("#nextMockWrap");
-  if(state.mock && state.mock.index < state.mock.ids.length-1){ wrap.hidden=false; } else wrap.hidden=true;
-  show("review");
+/* ---- mastery (Leitner) ---- */
+function mastery(){try{return JSON.parse(localStorage.getItem('sor_mastery')||'{}')}catch(e){return{}}}
+function setBox(id,b){const m=mastery();m[id]=b;localStorage.setItem('sor_mastery',JSON.stringify(m));}
+function cardsFor(key){const p=packFor(key);if(!p)return[];const c=[];
+  (p.whatToKnow||[]).forEach((w,i)=>c.push({id:`${key}|${TRAD}|k|${i}`,tag:'Know',q:w.point,a:w.detail,terms:w.keyTerms||[]}));
+  (p.pointsOfView||[]).forEach((v,i)=>c.push({id:`${key}|${TRAD}|v|${i}`,tag:'View',q:`Point of view — “${v.label}”: who holds it and what do they argue?`,a:`${v.who}: ${v.summary}`+(v.source?`  ·  Source: ${v.source}`:''),terms:[]}));
+  (p.sources||[]).forEach((s,i)=>c.push({id:`${key}|${TRAD}|s|${i}`,tag:s.type==='primary'?'Primary source':'Secondary source',q:`${s.reference} — what is it, and what do you use it for?`,a:(s.snippet?`“${s.snippet}”  ·  `:'')+`Use for: ${s.useFor}`,terms:[]}));
+  return c;}
+function readiness(key){const c=cardsFor(key);if(!c.length)return 0;const m=mastery();const done=c.filter(x=>(m[x.id]||0)>=3).length;return Math.round(done/c.length*100);}
+
+/* ---- HOME ---- */
+function renderTradSeg(){const seg=$('#tradSeg');seg.innerHTML=CONTENT.traditions.map(t=>`<button data-tr="${t}" aria-pressed="${t===TRAD}">${t}</button>`).join('');
+  $$('#tradSeg button').forEach(b=>b.onclick=()=>{TRAD=b.dataset.tr;localStorage.setItem('sor_trad',TRAD);renderTradSeg();renderHome();});}
+function renderHome(){const v=$('#v-home');
+  const modes=[
+    {id:'study',ico:'🧠',t:'Study & quiz',d:'Build the knowledge up one piece at a time, with spaced recall. Start here.'},
+    {id:'write',ico:'✍️',t:'Practise an essay',d:'A question in the real style — plan it, write it timed, with the facts at your side.'},
+    {id:'mock',ico:'⏱️',t:'Timed mock',d:'Two essays in two hours (or your own setup). Exam conditions.'},
+    {id:'prepare',ico:'🧭',t:'Prepare & stay calm',d:'The 5 things that lose marks, and how to walk in confident.'},
+  ];
+  v.innerHTML=`<h1 id="hh">Your Studies of Religion coach</h1>
+    <p class="lead">Studying <strong>${esc(TRAD)}</strong> as your second tradition. Switch any time (top bar). Pick a path:</p>
+    <div class="grid g2">${modes.map(m=>`<button class="card mode" data-go="${m.id}"><span class="ico" aria-hidden="true">${m.ico}</span><span><span class="t">${m.t}</span><br><span class="d">${m.d}</span></span></button>`).join('')}</div>
+    <h2>Your readiness</h2>
+    <div class="grid">${CONTENT.topics.map(t=>{const r=readiness(t.key);return `<button class="card" data-study="${t.key}" style="text-align:left">
+        <div class="row" style="justify-content:space-between"><strong>Section ${t.section} · ${esc(t.label)}</strong><span class="small muted">${r}% ready</span></div>
+        <div class="bar-track" style="margin-top:.5rem"><div class="bar-fill" style="width:${r}%"></div></div>
+        <div class="row" style="margin-top:.5rem">${t.criteria.map(c=>`<span class="chip">${c}</span>`).join('')}</div></button>`;}).join('')}</div>`;
+  $$('#v-home [data-go]').forEach(b=>b.onclick=()=>{const g=b.dataset.go; if(g==='mock')startMock(); else if(g==='study')openStudyPicker(); else if(g==='write')openWritePicker(); else if(g==='prepare')renderPrepare();});
+  $$('#v-home [data-study]').forEach(b=>b.onclick=()=>openStudy(b.dataset.study));
+  show('home');
 }
-function computeEstimate(){
-  const picks=$$("#rubricBox input:checked").map(i=>i.value);
-  const total=$$("#rubricBox .crit").length;
-  if(picks.length<total){ $("#estimate").textContent="Mark every criterion…"; return; }
-  const score={A:3,B:2,C:1}; const avg=picks.reduce((a,v)=>a+score[v],0)/picks.length;
-  let band = avg>=2.6?"A": avg>=2.2?"A/B": avg>=1.8?"B": avg>=1.4?"B/C":"C";
-  const lowest = picks.includes("C")?"Push your weakest criterion from explain → analyse → evaluate.":"Strong — keep evaluating significance, not just analysing.";
-  $("#estimate").innerHTML=`${band} <span class="small muted">— ${lowest}</span>`;
+function openStudyPicker(){pickTopic('Study which section?',openStudy);}
+function openWritePicker(){pickTopic('Practise which question?',k=>openWrite(k,null));}
+function pickTopic(title,cb){const v=$('#v-home');v.innerHTML=`<button class="btn-ghost" id="bk">← Home</button><h1>${title}</h1>
+  <div class="grid">${CONTENT.topics.map(t=>`<button class="card" data-k="${t.key}" style="text-align:left"><strong>Section ${t.section} · ${esc(t.label)}</strong><div class="small muted" style="margin-top:.3rem">${esc(t.prompt.slice(0,110))}…</div></button>`).join('')}</div>`;
+  $('#bk').onclick=renderHome;$$('#v-home [data-k]').forEach(b=>b.onclick=()=>cb(b.dataset.k));show('home');}
+
+/* ---- STUDY (knowledge build-up + spaced quiz) ---- */
+let session=null;
+function openStudy(key){const t=topic(key),p=packFor(key);const v=$('#v-study');
+  const cards=cardsFor(key);const m=mastery();const due=cards.slice().sort((a,b)=>(m[a.id]||0)-(m[b.id]||0));
+  session={key,queue:due,cards};
+  v.innerHTML=`<button class="btn-ghost" id="sBack">← Home</button>
+    <h1>Section ${t.section} · ${esc(t.label)}</h1>
+    <p class="lead">Build it up one piece at a time. Answer in your head (or out loud), then reveal. “Got it” banks it; “Not yet” brings it back — never a wrong answer.</p>
+    <div class="card"><div class="row" style="justify-content:space-between"><strong>Readiness</strong><span class="small muted" id="sPct">${readiness(key)}%</span></div>
+      <div class="bar-track" style="margin-top:.5rem"><div class="bar-fill" id="sBar" style="width:${readiness(key)}%"></div></div></div>
+    <div id="quizWrap"></div>
+    <details><summary>📖 Read all the notes for this question</summary><div id="notesAll"></div></details>`;
+  $('#sBack').onclick=renderHome;
+  renderNotes(key);nextCard();show('study');
+}
+function nextCard(){const w=$('#quizWrap');const m=mastery();
+  session.queue=session.cards.slice().filter(c=>(m[c.id]||0)<3).sort((a,b)=>(m[a.id]||0)-(m[b.id]||0));
+  if(!session.queue.length){w.innerHTML=`<div class="card calm" style="text-align:center"><h3>🎉 All banked for now.</h3><p class="muted small">This section is green. Come back tomorrow — spacing makes it stick.</p><button class="btn-primary" id="toWrite">Try writing this one →</button></div>`;$('#toWrite').onclick=()=>openWrite(session.key,null);return;}
+  const c=session.queue[0];
+  w.innerHTML=`<div class="card"><div class="row" style="justify-content:space-between"><span class="pill">${c.tag}</span><span class="tiny muted">${session.cards.filter(x=>(m[x.id]||0)>=3).length}/${session.cards.length} banked</span></div>
+    <div class="qcard"><div id="qFront">${esc(c.q)}</div><div id="qBack" hidden><div class="ans">${esc(c.a)}${c.terms&&c.terms.length?`<div style="margin-top:.6rem" class="row">${c.terms.map(t=>`<span class="chip gray">${esc(t)}</span>`).join('')}</div>`:''}</div></div></div>
+    <div class="row" id="qBtns"><button class="btn-primary" id="reveal" style="margin:auto">Show answer</button></div></div>`;
+  $('#reveal').onclick=()=>{$('#qBack').hidden=false;$('#qBtns').innerHTML=`<button class="btn-ghost" id="notyet">↺ Not yet</button><button class="btn-good" id="got" style="margin-left:auto">✓ Got it</button>`;
+    $('#got').onclick=()=>{setBox(c.id,(mastery()[c.id]||0)+1);bump();};$('#notyet').onclick=()=>{setBox(c.id,0);bump();};};
+}
+function bump(){const r=readiness(session.key);$('#sPct').textContent=r+'%';$('#sBar').style.width=r+'%';nextCard();}
+function renderNotes(key){const p=packFor(key);if(!p)return;const n=$('#notesAll');
+  n.innerHTML=`<h3>What to know</h3>${(p.whatToKnow||[]).map(w=>`<div class="fact"><strong>${esc(w.point)}</strong><div class="small" style="margin-top:.3rem">${esc(w.detail)}</div>${w.keyTerms&&w.keyTerms.length?`<div class="row" style="margin-top:.4rem">${w.keyTerms.map(t=>`<span class="chip gray">${esc(t)}</span>`).join('')}</div>`:''}</div>`).join('')}
+    <h3>Points of view</h3>${(p.pointsOfView||[]).map(v=>`<div class="fact"><strong>${esc(v.label)}</strong> — <span class="muted small">${esc(v.who)}</span><div class="small" style="margin-top:.3rem">${esc(v.summary)}</div></div>`).join('')}
+    <h3>Sources to cite</h3>${(p.sources||[]).map(s=>`<div class="fact"><span class="pill">${esc(s.type)}</span> <strong>${esc(s.reference)}</strong><div class="small" style="margin-top:.3rem">${s.snippet?`“${esc(s.snippet)}” — `:''}${esc(s.useFor)}</div></div>`).join('')}`;
 }
 
-/* ---------- mock flow ---------- */
-function startMock(){
-  const n=+$("#mockCount").value, mins=+$("#mockMins").value;
-  // one question per distinct section, then fill
-  const order=["A","B","C"]; const ids=[];
-  order.forEach(s=>{ const q=QUESTIONS.find(x=>x.section===s); if(q&&ids.length<n) ids.push(q.id); });
-  let i=0; while(ids.length<n && i<QUESTIONS.length){ if(!ids.includes(QUESTIONS[i].id)) ids.push(QUESTIONS[i].id); i++; }
-  state.mock={ids:ids.slice(0,n), mins, index:0};
-  openQuestion(state.mock.ids[0], {...state.mock});
+/* ---- WRITE ---- */
+let timerId=null,remaining=0,running=false,mock=null,curKey=null;
+function stimulusSVG(){return `<svg viewBox="0 0 320 120" width="100%" style="max-width:320px;display:block;margin:.4rem auto" role="img" aria-label="Original stimulus: a signpost pointing two ways, one marked this way and one marked that way">
+  <rect width="320" height="120" rx="10" fill="var(--surface-2)"/><line x1="160" y1="30" x2="160" y2="105" stroke="var(--ink-soft)" stroke-width="4"/>
+  <polygon points="20,40 120,40 140,55 120,70 20,70" fill="var(--accent)"/><text x="30" y="60" fill="#fff" font-size="13" font-weight="700">THIS WAY</text>
+  <polygon points="300,52 200,52 180,67 200,82 300,82" fill="var(--ink-soft)"/><text x="208" y="72" fill="#fff" font-size="13" font-weight="700">THAT WAY</text>
+  <text x="160" y="116" text-anchor="middle" font-size="9" fill="var(--ink-soft)">Original illustrative stimulus</text></svg>`;}
+function openWrite(key,mk){const t=topic(key),p=packFor(key);curKey=key;mock=mk;const v=$('#v-write');
+  v.innerHTML=`<div class="toolbar"><button class="btn-ghost" id="wBack">← Home</button>
+      ${mk?`<span class="chip">Essay ${mk.index+1}/${mk.ids.length}</span>`:''}
+      <span class="small"><span class="muted">Words</span> <b id="wc">0</b><span class="muted" id="wt"></span></span>
+      <span style="margin-left:auto" class="small"><span class="muted">Time</span> <span class="timer" id="tm">00:00</span></span>
+      <button id="tTog">Pause</button></div>
+    <div class="row" style="margin:.2rem 0 .5rem">${t.criteria.map(c=>`<span class="chip" title="${CRIT[c]}">${c} — ${CRIT[c]}</span>`).join('')}</div>
+    ${t.stimulus?stimulusSVG():''}
+    <p class="prompt" tabindex="0">${esc(t.prompt)}</p>
+    <details open class="agrade"><summary>📝 Plan — the specific roadmap for THIS question</summary><ul class="tight">${(p.paragraphPlan||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
+      <p class="small"><strong>Model thesis to adapt:</strong> ${esc(p.workedThesis||'')}</p></details>
+    <details><summary>📎 Pull the facts you need (don't memorise — understand)</summary><div id="facts"></div></details>
+    <details class="pitfall"><summary>⚠️ Traps that lose marks here</summary><ul class="tight">${(p.trapsForThisQuestion||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></details>
+    <label for="essay" class="small muted" style="display:block;margin:.6rem 0 .3rem">Your essay (autosaves):</label>
+    <textarea id="essay" placeholder="Intro: name the question + your thesis + a roadmap of your paragraphs…"></textarea>
+    <div class="row" style="margin-top:.7rem"><button class="btn-primary" id="fin">✓ Finish &amp; self-mark</button>
+      <details style="margin:0"><summary>👁 See an A-grade paragraph</summary><div class="ans" style="margin-top:.4rem">${esc(p.exemplarParagraph||'')}</div></details>
+      <span class="small muted" id="save"></span></div>`;
+  // facts
+  $('#facts').innerHTML=`${(p.sources||[]).map(s=>`<div class="fact"><span class="pill">${esc(s.type)}</span> <strong>${esc(s.reference)}</strong> <span class="small muted">— ${esc(s.useFor)}</span></div>`).join('')}
+    ${(p.pointsOfView||[]).map(vv=>`<div class="fact"><strong>${esc(vv.label)}</strong>: <span class="small">${esc(vv.summary)}</span></div>`).join('')}`;
+  $('#wt').textContent=' / ~'+(t.section==='A'?700:800);
+  const ta=$('#essay');ta.value=localStorage.getItem('draft_'+key+'_'+TRAD)||'';
+  const cw=()=>{const n=(ta.value.trim().match(/\S+/g)||[]).length;$('#wc').textContent=n;localStorage.setItem('draft_'+key+'_'+TRAD,ta.value);const s=$('#save');s.textContent='saved';setTimeout(()=>s.textContent='',1000);};
+  ta.addEventListener('input',cw);cw();
+  $('#wBack').onclick=renderHome;$('#fin').onclick=()=>openReview(key);
+  setupTimer((mk?mk.mins:60)*60);show('write');ta.focus();
 }
-$("#startMock").onclick=startMock;
-$("#nextMock").onclick=()=>{ const m=state.mock; m.index++; openQuestion(m.ids[m.index], {...m}); };
+function fmt(s){s=Math.max(0,s);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+function setupTimer(sec){clearInterval(timerId);remaining=sec;running=true;$('#tTog').textContent='Pause';drawT();timerId=setInterval(()=>{if(running){remaining--;drawT();if(remaining<=0){running=false;clearInterval(timerId);announce('Time is up — finish your sentence and self-mark.');}}},1000);}
+function drawT(){const t=$('#tm');if(!t)return;t.textContent=fmt(remaining);t.classList.toggle('low',remaining<=300);}
+document.addEventListener('click',e=>{if(e.target&&e.target.id==='tTog'){running=!running;e.target.textContent=running?'Pause':'Resume';}});
 
-/* ---------- nav ---------- */
-$("#finishBtn").onclick=openReview;
-$("#reviewBack").onclick=()=>show("write");
-$("#backHome").onclick=goHome; $("#homeBtn").onclick=goHome;
-function goHome(){ if(window.speechSynthesis) window.speechSynthesis.cancel(); speaking=false; setRead(false); clearInterval(state.timerId); state.mock=null; renderHome(); show("home"); }
+/* ---- REVIEW (question-specific self-mark) ---- */
+function checksFor(key){const t=topic(key);const C=new Set(t.criteria);const out=[
+  {k:'answer',label:'I answered THIS question — not a prepared/general essay.'},
+  {k:'evidence',label:'I used specific evidence (names, dates, a quote) — not vague statements.'},
+  {k:'evaluate',label:'I reached EVALUATE (judged significance / weighed it up) — not just explained.'},
+  {k:'intro',label:'My intro had a clear thesis + a roadmap of my paragraphs.'},
+];
+  if(C.has('C6'))out.push({k:'two',label:'I focused on exactly TWO variants.'},{k:'bp',label:'I gave a belief difference AND a practice difference, plus conflict AND cooperation.'});
+  if(C.has('C7'))out.push({k:'link',label:'I linked beliefs/practices back to the issue in every paragraph (+ a case study showing the response, not just history).'});
+  if(C.has('C8'))out.push({k:'pov',label:'I gave at least two points of view, used primary AND secondary sources, and addressed “change or lack of change”.'});
+  const p=packFor(key);(p&&p.trapsForThisQuestion||[]).slice(0,2).forEach((tr,i)=>out.push({k:'trap'+i,label:'I avoided: '+tr}));
+  return out;}
+function openReview(key){const t=topic(key),p=packFor(key);const v=$('#v-review');const checks=checksFor(key);
+  v.innerHTML=`<button class="btn-ghost" id="rBack">← Back to writing</button>
+    <h1>Self-mark — be honest</h1><p class="lead">Tick what you actually did. Then place each criterion on its ladder for THIS question.</p>
+    <div class="card"><h3 style="margin-top:.2rem">Did your essay do these?</h3><div id="checks">${checks.map((c,i)=>`<label class="check"><input type="checkbox" data-chk="${i}"><span>${esc(c.label)}</span></label>`).join('')}</div></div>
+    <div class="card"><h3 style="margin-top:.2rem">The verb ladder — for this exact question</h3>
+      ${t.criteria.map(c=>{const L=(p&&p.ladderForThis)||{};const txt={C:L.C,B:L.B,A:L.A};return `<div style="margin:.6rem 0"><strong>${c} — ${CRIT[c]}</strong>
+        <div class="ladder" role="radiogroup" aria-label="${CRIT[c]}">${['C','B','A'].map(l=>`<label class="${l}"><input type="radio" name="lad_${c}"><span class="lvl">${l}</span><span>${esc(txt[l]||({C:'explain/describe',B:'analyse',A:'evaluate significance'}[l]))}</span></label>`).join('')}</div></div>`;}).join('')}</div>
+    <div class="card"><div class="row" style="justify-content:space-between"><div><span class="muted small">Your self-estimate</span><br><span style="font-size:1.2rem;font-weight:800" id="est">Mark above…</span></div><div class="small muted" id="wsum"></div></div></div>
+    <details class="agrade"><summary>👁 Compare with an A-grade paragraph</summary><div class="ans" style="margin-top:.4rem">${esc(p&&p.exemplarParagraph||'')}</div></details>
+    ${mock&&mock.index<mock.ids.length-1?`<button class="btn-primary" id="nextM" style="margin-top:1rem">Next essay →</button>`:''}`;
+  const calc=()=>{const chk=$$('#checks input:checked').length,tot=$$('#checks input').length;
+    const lad=$$('#v-review input[type=radio]:checked');const totL=t.criteria.length;
+    if(lad.length<totL){$('#est').textContent='Place every criterion…';return;}
+    const map={C:1,B:2,A:3};const avg=[...$$('#v-review input[type=radio]:checked')].reduce((a,r)=>{const l=r.parentElement.querySelector('.lvl').textContent;return a+map[l];},0)/totL;
+    const band=avg>=2.6?'A':avg>=2.2?'A/B':avg>=1.8?'B':avg>=1.4?'B/C':'C';
+    const tip=chk<tot?`You ticked ${chk}/${tot} — the unticked ones are your fastest marks.`:'All boxes ticked — now push every criterion toward “evaluate”.';
+    $('#est').innerHTML=`${band} <span class="small muted">— ${tip}</span>`;};
+  $$('#v-review input').forEach(i=>i.addEventListener('change',calc));
+  const w=(localStorage.getItem('draft_'+key+'_'+TRAD)||'').trim().match(/\S+/g)||[];
+  $('#wsum').innerHTML=`You wrote <b>${w.length}</b> words${w.length<450?' — examiners warn ~2 pages is too short.':' — good depth.'}`;
+  $('#rBack').onclick=()=>openWrite(key,mock);if(mock&&mock.index<mock.ids.length-1)$('#nextM').onclick=()=>{mock.index++;openWrite(mock.ids[mock.index],mock);};
+  show('review');
+}
 
-renderHome(); show("home");
+/* ---- MOCK ---- */
+function startMock(){const ids=['A-variant','B-suffering','C-women'].slice(0,2);mock={ids,mins:60,index:0};openWrite(ids[0],mock);}
+
+/* ---- PREPARE (killers + exam-day) ---- */
+function mdToHtml(md){md=esc(md);const lines=md.split('\n');let html='',inList=false;
+  for(let ln of lines){ if(/^\s*[-*]\s+/.test(ln)){if(!inList){html+='<ul class="tight">';inList=true;}html+='<li>'+ln.replace(/^\s*[-*]\s+/,'')+'</li>';continue;} if(inList){html+='</ul>';inList=false;}
+    if(/^###\s/.test(ln))html+='<h3>'+ln.replace(/^###\s/,'')+'</h3>'; else if(/^##\s/.test(ln))html+='<h2>'+ln.replace(/^##\s/,'')+'</h2>'; else if(/^#\s/.test(ln))html+='<h2>'+ln.replace(/^#\s/,'')+'</h2>'; else if(ln.trim()==='')html+=''; else html+='<p>'+ln+'</p>'; }
+  if(inList)html+='</ul>';
+  return html.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');}
+function renderPrepare(){const v=$('#v-prepare');
+  v.innerHTML=`<button class="btn-ghost" id="pBack">← Home</button><h1>Prepare &amp; walk in confident</h1>
+    <div class="calm"><strong>Before you read anything below — a breath.</strong> You've done the building. This page is just the map. You don't need to be perfect; you need to answer the question and keep climbing the ladder.</div>
+    <div class="card pitfall md"><h2 style="margin-top:.2rem">⚠️ The 5 killers (what loses marks)</h2>${mdToHtml(CONTENT.killers||'')}</div>
+    <div class="card md"><h2 style="margin-top:.2rem">🧭 Exam-day playbook</h2>${mdToHtml(CONTENT.examDay||'')}</div>`;
+  $('#pBack').onclick=renderHome;show('prepare');
+}
+
+/* ---- boot ---- */
+fetch('content.json').then(r=>r.json()).then(d=>{CONTENT=d;renderTradSeg();renderHome();}).catch(e=>{$('#v-loading').innerHTML='<p class="lead">Couldn\'t load content.json. If you opened the file directly, use the live URL instead (it needs to be served).</p>';console.error(e);});
+$('#homeBtn').onclick=()=>{mock=null;renderHome();};
 </script>
 </body>
 </html>
