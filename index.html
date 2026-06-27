@@ -83,6 +83,7 @@
   <section id="v-write" hidden></section>
   <section id="v-review" hidden></section>
   <section id="v-prepare" hidden></section>
+  <section id="v-revise" hidden></section>
   <section id="v-loading"><p class="lead">Loading your study content…</p></section>
 </main>
 
@@ -109,7 +110,7 @@ $('#readBtn').onclick=()=>{ if(speaking){window.speechSynthesis.cancel();setRead
 function announce(m){let r=$('#live');if(!r){r=document.createElement('div');r.id='live';r.className='visually-hidden';r.setAttribute('aria-live','assertive');document.body.appendChild(r);}r.textContent='';setTimeout(()=>r.textContent=m,30);}
 
 /* ---- views ---- */
-function show(v){['home','study','write','review','prepare','loading'].forEach(x=>$('#v-'+x).hidden=(x!==v));window.scrollTo({top:0});if(speaking){window.speechSynthesis.cancel();setRead(false);}}
+function show(v){['home','study','write','review','prepare','revise','loading'].forEach(x=>$('#v-'+x).hidden=(x!==v));window.scrollTo({top:0});if(speaking){window.speechSynthesis.cancel();setRead(false);}}
 function packFor(key){return (CONTENT.packs||{})[key+'|'+TRAD]||null;}
 function topic(key){return CONTENT.topics.find(t=>t.key===key);}
 
@@ -129,6 +130,7 @@ function renderTradSeg(){const seg=$('#tradSeg');seg.innerHTML=CONTENT.tradition
 function renderHome(){const v=$('#v-home');
   const modes=[
     {id:'study',ico:'🧠',t:'Study & quiz',d:'Build the knowledge up one piece at a time, with spaced recall. Start here.'},
+    {id:'revise',ico:'📖',t:'Revise & notes',d:'Everything for each question in clear, labelled sections — what to know, why, how, the official standard, and what to watch for.'},
     {id:'write',ico:'✍️',t:'Practise an essay',d:'A question in the real style — plan it, write it timed, with the facts at your side.'},
     {id:'mock',ico:'⏱️',t:'Timed mock',d:'Two essays in two hours (or your own setup). Exam conditions.'},
     {id:'prepare',ico:'🧭',t:'Prepare & stay calm',d:'The 5 things that lose marks, and how to walk in confident.'},
@@ -141,7 +143,7 @@ function renderHome(){const v=$('#v-home');
         <div class="row" style="justify-content:space-between"><strong>Section ${t.section} · ${esc(t.label)}</strong><span class="small muted">${r}% ready</span></div>
         <div class="bar-track" style="margin-top:.5rem"><div class="bar-fill" style="width:${r}%"></div></div>
         <div class="row" style="margin-top:.5rem">${t.criteria.map(c=>`<span class="chip">${c}</span>`).join('')}</div></button>`;}).join('')}</div>`;
-  $$('#v-home [data-go]').forEach(b=>b.onclick=()=>{const g=b.dataset.go; if(g==='mock')startMock(); else if(g==='study')openStudyPicker(); else if(g==='write')openWritePicker(); else if(g==='prepare')renderPrepare();});
+  $$('#v-home [data-go]').forEach(b=>b.onclick=()=>{const g=b.dataset.go; if(g==='mock')startMock(); else if(g==='study')openStudyPicker(); else if(g==='write')openWritePicker(); else if(g==='prepare')renderPrepare(); else if(g==='revise')openRevisePicker();});
   $$('#v-home [data-study]').forEach(b=>b.onclick=()=>openStudy(b.dataset.study));
   show('home');
 }
@@ -274,6 +276,64 @@ function renderPrepare(){const v=$('#v-prepare');
     <div class="card pitfall md"><h2 style="margin-top:.2rem">⚠️ The 5 killers (what loses marks)</h2>${mdToHtml(CONTENT.killers||'')}</div>
     <div class="card md"><h2 style="margin-top:.2rem">🧭 Exam-day playbook</h2>${mdToHtml(CONTENT.examDay||'')}</div>`;
   $('#pBack').onclick=renderHome;show('prepare');
+}
+
+/* ---- REVISE (labelled notes pockets) ---- */
+const CRIT_WHY={
+ C1:'Communication (C1): structure the essay clearly, use precise religious terminology, and control spelling/grammar — assessed in EVERY section.',
+ C3:'Beliefs, values & practices (C3): the core. Don’t just describe — EVALUATE the significance of beliefs & practices to people’s lives, using a wide range of knowledge.',
+ C6:'The variant (C6): analyse the origins of the variant, the differences in doctrine and practice, and the conflict AND cooperation between the two groups.',
+ C7:'Contemporary issue (C7): analyse the rationale for the tradition’s view, how its beliefs reinforce it, and evaluate its response to draw justified conclusions.',
+ C8:'Points of view (C8): analyse several points of view, then evaluate their coherence (do they make sense?) and consistency (do they match the tradition’s beliefs?).'
+};
+// Official TASC standards (REL315124) — reference, © TASC, for study.
+const STANDARDS={
+ C1:{name:'Communication',elements:[
+  {e:'Structure',C:'structures ideas and information in a logical, coherent manner',B:'appropriately structures ideas and information in a logical, coherent manner',A:'effectively structures ideas and information in a detailed, logical, coherent manner'},
+  {e:'Terminology',C:'selects and uses a relevant range of terminology to clearly communicate meaning',B:'selects and uses specialist and non-specialist terminology to clearly communicate meaning',A:'selects and correctly uses relevant specialist and non-specialist terminology to effectively communicate meaning'},
+  {e:'Skills & strategies',C:'uses communication skills and strategies for a specific purpose',B:'uses communication skills and strategies appropriate to purpose and audience',A:'uses communication skills and strategies that are effective and appropriate to purpose, audience and context'},
+  {e:'Control of language',C:'uses correct spelling, grammar and punctuation to communicate clearly',B:'uses correct spelling and uses grammar and punctuation to communicate clearly',A:'uses correct spelling and uses grammar and punctuation effectively to communicate'}]},
+ C3:{name:'Beliefs, values & practices',elements:[
+  {e:'Beliefs & values',C:'explains beliefs and values, identifying how they shape people’s lives and actions',B:'analyses beliefs and values, describing how they shape people’s lives and actions',A:'evaluates the significance of beliefs and values, explaining how they shape people’s lives and actions'},
+  {e:'Practices',C:'explains the core practices of religious traditions',B:'analyses the core practices of religious traditions',A:'critically analyses and assesses the core practices of religious traditions'},
+  {e:'Significance',C:'discusses different perspectives to identify the significance to individuals or the collective',B:'analyses different perspectives to discuss the significance',A:'critically analyses different perspectives to explain the significance'},
+  {e:'Knowledge',C:'selects and uses a limited range of religious knowledge',B:'selects and uses a range of religious knowledge',A:'selects and uses a wide range of religious knowledge'}]},
+ C6:{name:'The variant',elements:[
+  {e:'Origins of the variant',C:'explains the historical reasons for the origin of a variant',B:'analyses and discusses the historical reasons for the origin of a variant',A:'critically analyses and assesses the historical reasons for the origin of a variant'},
+  {e:'Doctrine: similarities & differences',C:'discusses the similarities and differences in doctrine between a tradition and its variant',B:'explains the similarities and differences in doctrine',A:'critically analyses the similarities and differences in doctrine'},
+  {e:'Conflict & cooperation',C:'discusses conflict and cooperation between adherents of a tradition and a variant',B:'explains conflict and cooperation',A:'analyses and assesses conflict and cooperation'}]},
+ C7:{name:'Contemporary issue',elements:[
+  {e:'Rationale for the view',C:'explains the rationale for a tradition’s view and responses to a contemporary issue',B:'analyses the rationale',A:'critically analyses and assesses the rationale'},
+  {e:'How beliefs reinforce the view',C:'explains how beliefs, values, practices and teachings reinforce the tradition’s view',B:'analyses how beliefs, values, practices and teachings reinforce the view',A:'critically analyses and assesses how beliefs, values, practices and teachings reinforce the view'},
+  {e:'Responses & conclusions',C:'explains how a tradition has responded, to draw conclusions',B:'critically analyses how a tradition has responded, to draw reasoned conclusions',A:'critically examines and evaluates how a tradition has responded, to draw justified conclusions'}]},
+ C8:{name:'Points of view',elements:[
+  {e:'Points of view',C:'identifies points of view expressed by adherents to support an argument',B:'discusses points of view expressed by adherents',A:'analyses points of view expressed by adherents'},
+  {e:'Coherence',C:'explains internal coherence of points of view, to make conclusions',B:'analyses the coherence of points of view, to make reasoned conclusions',A:'evaluates the coherence of points of view, to make justified conclusions'},
+  {e:'Consistency',C:'explains consistency of a point of view with beliefs, values and actions',B:'analyses the consistency',A:'evaluates the consistency'}]}
+};
+function openRevisePicker(){pickTopic('Revise which question?',openRevise);}
+function openRevise(key){const t=topic(key),p=packFor(key),v=$('#v-revise');
+  if(!p){v.innerHTML='<button class="btn-ghost" id="rvBack">← Home</button><p class="lead">No notes for this yet.</p>';$('#rvBack').onclick=renderHome;show('revise');return;}
+  const pk=(icon,label,inner)=>`<div class="card"><h3 style="margin-top:.2rem">${icon} ${label}</h3>${inner}</div>`;
+  const std=t.criteria.map(c=>{const s=STANDARDS[c];if(!s)return'';return `<div class="fact"><strong>${c} — ${esc(s.name)}</strong>${s.elements.map(el=>`<div style="margin:.45rem 0"><span class="pill">${esc(el.e)}</span>
+      <div class="small" style="margin-top:.25rem"><strong style="color:var(--gold)">A</strong> &nbsp;${esc(el.A)}</div>
+      <div class="small"><strong style="color:var(--accent-ink)">B</strong> &nbsp;${esc(el.B)}</div>
+      <div class="small"><strong class="muted">C</strong> &nbsp;${esc(el.C)}</div></div>`).join('')}</div>`;}).join('');
+  v.innerHTML=`<button class="btn-ghost" id="rvBack">← Home</button>
+    <h1>📖 Revision notes · Section ${t.section}</h1>
+    <p class="lead">${esc(t.label)} — for <strong>${esc(TRAD)}</strong>. Everything in one place, in clear sections. Press 🔊 Read to hear it all.</p>
+    ${pk('📌','The question',`<p class="prompt">${esc(t.prompt)}</p><div class="row" style="margin-top:.5rem">${t.criteria.map(c=>`<span class="chip">${c} — ${CRIT[c]}</span>`).join('')}</div>`)}
+    ${pk('🎯','Why this question — what it’s really testing',`<ul class="tight">${t.criteria.map(c=>`<li>${esc(CRIT_WHY[c]||'')}</li>`).join('')}</ul>`)}
+    ${pk('📚','What you need to know',(p.whatToKnow||[]).map(w=>`<div class="fact"><strong>${esc(w.point)}</strong><div class="small" style="margin-top:.3rem">${esc(w.detail)}</div>${w.keyTerms&&w.keyTerms.length?`<div class="row" style="margin-top:.4rem">${w.keyTerms.map(x=>`<span class="chip gray">${esc(x)}</span>`).join('')}</div>`:''}</div>`).join(''))}
+    ${pk('👥','The points of view',(p.pointsOfView||[]).map(vv=>`<div class="fact"><strong>${esc(vv.label)}</strong> — <span class="muted small">${esc(vv.who)}</span><div class="small" style="margin-top:.25rem">${esc(vv.summary)}</div>${vv.source?`<div class="tiny muted" style="margin-top:.2rem">Source: ${esc(vv.source)}</div>`:''}</div>`).join(''))}
+    ${pk('📎','Sources to quote — and what for',(p.sources||[]).map(s=>`<div class="fact"><span class="pill">${esc(s.type)}</span> <strong>${esc(s.reference)}</strong><div class="small" style="margin-top:.25rem">${s.snippet?`“${esc(s.snippet)}” — `:''}<em>Use for:</em> ${esc(s.useFor)}</div></div>`).join(''))}
+    ${pk('🛠️','How to do it — the approach',`<p class="small"><strong>Model thesis to adapt:</strong> ${esc(p.workedThesis||'')}</p><ol class="tight">${(p.paragraphPlan||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ol>`)}
+    ${pk('⚠️','What to watch out for (the traps)',`<ul class="tight">${(p.trapsForThisQuestion||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`)}
+    ${pk('📏','The official standard — what A vs B vs C looks like',`${std}<p class="tiny muted" style="margin-top:.5rem">Official assessment standards © TASC, for study.</p>`)}
+    ${pk('⭐','An A-grade paragraph',`<div class="ans">${esc(p.exemplarParagraph||'')}</div>`)}
+    <div class="row" style="margin:.4rem 0 2.5rem"><button class="btn-primary" id="rvWrite">Now practise this →</button> <button class="btn-ghost" id="rvStudy">Quiz me on it</button></div>`;
+  $('#rvBack').onclick=renderHome;$('#rvWrite').onclick=()=>openWrite(key,null);$('#rvStudy').onclick=()=>openStudy(key);
+  show('revise');
 }
 
 /* ---- boot ---- */
