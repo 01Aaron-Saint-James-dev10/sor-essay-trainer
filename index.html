@@ -85,6 +85,7 @@
   <section id="v-prepare" hidden></section>
   <section id="v-revise" hidden></section>
   <section id="v-sources" hidden></section>
+  <section id="v-pdf" hidden></section>
   <section id="v-loading"><p class="lead">Loading your study content…</p></section>
 </main>
 
@@ -111,7 +112,7 @@ $('#readBtn').onclick=()=>{ if(speaking){window.speechSynthesis.cancel();setRead
 function announce(m){let r=$('#live');if(!r){r=document.createElement('div');r.id='live';r.className='visually-hidden';r.setAttribute('aria-live','assertive');document.body.appendChild(r);}r.textContent='';setTimeout(()=>r.textContent=m,30);}
 
 /* ---- views ---- */
-function show(v){['home','study','write','review','prepare','revise','sources','loading'].forEach(x=>$('#v-'+x).hidden=(x!==v));window.scrollTo({top:0});if(speaking){window.speechSynthesis.cancel();setRead(false);}}
+function show(v){['home','study','write','review','prepare','revise','sources','pdf','loading'].forEach(x=>$('#v-'+x).hidden=(x!==v));window.scrollTo({top:0});if(speaking){window.speechSynthesis.cancel();setRead(false);}}
 function packFor(key){return (CONTENT.packs||{})[key+'|'+TRAD]||null;}
 function topic(key){return CONTENT.topics.find(t=>t.key===key);}
 
@@ -310,16 +311,42 @@ function renderPrepare(){const v=$('#v-prepare');
 }
 function renderSources(){const v=$('#v-sources');
   v.innerHTML=`<button class="btn-ghost" id="sBack">← Home</button>
-    <h1>📚 Sources &amp; how accurate this is</h1>
-    <div class="card pitfall"><h3 style="margin-top:.2rem">How much can you trust these notes?</h3>
-      <p class="small">Be honest with yourself about this. Every fact here was <strong>written by AI, then independently fact-checked by a second AI pass</strong> — which caught and fixed real errors (an invented mnemonic, a wrong denomination, wrong dates) before they reached you.</p>
-      <p class="small">That’s a strong safety net — but it is <strong>not</strong> the same as your teacher or the official documents. Religious accuracy is something markers treat as a threshold, so: use these as a fast study scaffold, and <strong>check anything important against the official sources below and your teacher.</strong></p></div>
+    <h1>📚 About, sources &amp; accuracy</h1>
+    <div class="card calm"><h3 style="margin-top:.2rem">⚠️ Please read this first — the honest disclaimer</h3>
+      <p class="small"><strong>This tool does not guarantee anything</strong> — not a grade, a mark, or a result. It is a <strong>study aid</strong>, designed to help you revise and practise more effectively. The learning, the work, and the outcome are yours.</p>
+      <p class="small">It is built using <strong>evidence-based learning research</strong> and the <strong>full official course resources</strong>, and the facts have been double-checked by AI — but it is <strong>not</strong> a substitute for your teacher or the official documents. Always cross-check anything important.</p></div>
+    <div class="card"><h3 style="margin-top:.2rem">🔬 How it works — the research &amp; the algorithms</h3>
+      <p class="small"><strong>Designed on learning science:</strong></p>
+      <ul class="tight small">
+        <li><strong>Retrieval practice</strong> — testing yourself beats re-reading (Roediger &amp; Karpicke). That's the “Study &amp; quiz” mode.</li>
+        <li><strong>Spaced repetition</strong> — reviewing at growing intervals fixes memory for the long term (Cepeda et al.). The quiz schedules itself for you.</li>
+        <li><strong>The verb ladder</strong> — the official TASC marking standards, turned into a self-check: <em>explain</em> = C, <em>analyse</em> = B, <em>evaluate</em> = A.</li>
+        <li><strong>Reduced cognitive load (UDL)</strong> — one step at a time, tap-to-open cards, read-aloud, adjustable text — built for focus and low fatigue.</li>
+      </ul>
+      <p class="small"><strong>Built from the full official REL315124 resources:</strong> the course document, assessment specifications, exemplar exam, the 2024 &amp; 2025 papers, and both examiners' reports.</p>
+      <p class="small"><strong>The content “algorithm”:</strong> study notes were AI-generated → <strong>adversarially fact-checked by a second AI</strong> → corrected (this caught real errors before they reached you). A spaced-repetition scheduler (Leitner boxes) decides what to quiz and when; “readiness” = how many knowledge cards you've banked.</p></div>
+    <div class="card pitfall"><h3 style="margin-top:.2rem">How accurate is it, really?</h3>
+      <p class="small">Strong safety net, <strong>not a guarantee.</strong> Religious accuracy is a marker's threshold — so check the specifics against the official sources below and your teacher.</p></div>
     <div class="card"><h3 style="margin-top:.2rem">Official sources — open to verify (TASC)</h3>
-      <p class="small muted">These are the real, public documents this app is built from. Open any to check a fact.</p>
+      <p class="small muted">The real, public documents this app is built from. Open any to check a fact.</p>
       <ul class="tight">${SOURCES.map(s=>`<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)} ↗</a></li>`).join('')}</ul></div>
-    <div class="card"><h3 style="margin-top:.2rem">Textbooks (for deeper reading)</h3>
-      <p class="small">Your teacher’s set texts — e.g. <em>Living Religion</em> (6th ed., Morrissey et al.) and <em>Exploring Religion and Ethics</em> (Goldburg et al., Cambridge). These are copyrighted, so they’re <strong>not reproduced here</strong> — borrow them through your school or library. (Want to read your own copy alongside the app? I can add a private, on-device PDF reader — just ask.)</p></div>`;
-  $('#sBack').onclick=renderHome;show('sources');
+    <div class="card"><h3 style="margin-top:.2rem">📄 Read your own textbook / notes (private)</h3>
+      <p class="small">Textbooks like <em>Living Religion</em> (Morrissey et al.) and <em>Exploring Religion and Ethics</em> (Goldburg et al.) are copyrighted, so they're <strong>not reproduced here</strong> — borrow them via school/library. But you can open <strong>your own</strong> PDF beside the app, on your device only.</p>
+      <button class="btn-primary" id="toPdf">📄 Open a PDF on this device →</button></div>`;
+  $('#sBack').onclick=renderHome;$('#toPdf').onclick=renderPdf;show('sources');
+}
+let pdfUrl=null;
+function renderPdf(){const v=$('#v-pdf');
+  v.innerHTML=`<button class="btn-ghost" id="pdBack">← Back</button>
+    <h1>📄 Open your own PDF</h1>
+    <div class="card calm small"><strong>100% private &amp; free:</strong> your file opens on this device only — nothing is uploaded, sent, or stored anywhere. It never leaves your browser.</div>
+    <p class="small muted">Choose a PDF from your device (a textbook chapter, your notes) to read it beside the app.</p>
+    <input type="file" id="pdfIn" accept="application/pdf" aria-label="Choose a PDF from your device" />
+    <div id="pdfView" style="margin-top:1rem"></div>`;
+  $('#pdBack').onclick=renderSources;
+  $('#pdfIn').onchange=e=>{const f=e.target.files&&e.target.files[0];if(!f)return;if(pdfUrl)URL.revokeObjectURL(pdfUrl);pdfUrl=URL.createObjectURL(f);
+    $('#pdfView').innerHTML=`<p class="small muted">📄 ${esc(f.name)}</p><iframe title="Your PDF document" src="${pdfUrl}" style="width:100%;height:75vh;border:1px solid var(--line);border-radius:12px"></iframe><p class="small"><a href="${pdfUrl}" target="_blank" rel="noopener">Open in a new tab ↗</a> (if it doesn't show above)</p>`;};
+  show('pdf');
 }
 
 /* ---- REVISE (labelled notes pockets) ---- */
